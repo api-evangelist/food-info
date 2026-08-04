@@ -1,0 +1,18 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://api.food-info.org/api/v1/openapi.json
+description: API key in the X-Api-Key header. HTTPS only, and CORS is disabled — intended
+  for server-to-server use.
+verified: '2026-08-04'
+schemes:
+- id: ApiKey
+  type: apiKey
+  in: header
+  name: X-Api-Key
+evidence:
+- url: https://api.food-info.org/api/v1/openapi.json
+  status: 200
+  note: securitySchemes read from the published spec
+- url: https://food-info.org/developer
+  status: 200

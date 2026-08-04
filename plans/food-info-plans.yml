@@ -1,0 +1,15 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://food-info.org/developer
+description: Free tier with paid tiers above it.
+verified: '2026-08-04'
+model: freemium
+free_tier:
+  requests_per_minute: 10
+  requests_per_day: 100
+evidence:
+- url: https://food-info.org/developer
+  status: 200
+gaps:
+- Paid tier amounts were not parsed from the developer page.

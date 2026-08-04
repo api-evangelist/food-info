@@ -1,0 +1,85 @@
+# Food Info
+
+> Nutrient data for every food, calories, macros, vitamins, and minerals, harmonised from five national food composition datasets (USDA FoodData Central, McCance & Widdowson's CoFID, ANSES Ciqual, DTU Frida, FSANZ AUSNUT) plus Open Food Facts. UK-registered service; Reference Intakes follow EU Reg. 1169/2011 by default with an FDA 2016 toggle for US Daily Values.
+
+## Nutrient guides
+
+Programmatic landing pages covering what each nutrient does, how much you need (UK Reference Intakes), the top food sources ranked by per-100 g amount, and common questions. Each page carries CollectionPage + FAQPage JSON-LD.
+
+- [Calories](https://food-info.org/nutrient/calories): What calories are, daily references, and the highest-calorie foods.
+- [Protein](https://food-info.org/nutrient/protein): Protein function, daily intake, and the densest dietary sources.
+- [Carbohydrate](https://food-info.org/nutrient/carbohydrate): Simple vs complex carbs, daily targets, and foods highest in carbohydrate.
+- [Fat](https://food-info.org/nutrient/fat): Saturated vs unsaturated vs trans fats, daily targets, and the foods highest in fat.
+- [Fiber](https://food-info.org/nutrient/fiber): Soluble vs insoluble fiber, the UK 30 g/day target, and fiber-densest foods.
+- [Sugars](https://food-info.org/nutrient/sugars): Free vs intrinsic sugars, the 30 g/day UK limit, and sugar-densest foods.
+- [Starch](https://food-info.org/nutrient/starch): What starch is, resistant starch, and the foods highest in starch.
+- [Calcium](https://food-info.org/nutrient/calcium): Calcium's role in bone, the 800 mg/day UK RI, and the foods richest in calcium.
+- [Iron](https://food-info.org/nutrient/iron): Heme vs non-heme iron, the 14 mg/day UK RI, and the foods highest in iron.
+- [Magnesium](https://food-info.org/nutrient/magnesium): Magnesium's role in 300+ enzymes, the 375 mg/day UK RI, and richest sources.
+- [Phosphorus](https://food-info.org/nutrient/phosphorus): Phosphorus in bone + ATP, the 700 mg/day UK RI, and richest sources.
+- [Potassium](https://food-info.org/nutrient/potassium): Potassium and blood pressure, the 2,000 mg/day UK RI, and the foods richest in it.
+- [Sodium](https://food-info.org/nutrient/sodium): Sodium and blood pressure, the under-2.4 g/day UK target, and processed-food sources.
+- [Zinc](https://food-info.org/nutrient/zinc): Zinc for immunity and wound healing, the 10 mg/day UK RI, and richest sources.
+- [Copper](https://food-info.org/nutrient/copper): Copper for iron metabolism, the 1 mg/day UK RI, and richest sources.
+- [Manganese](https://food-info.org/nutrient/manganese): Manganese for bone formation, the 2 mg/day UK RI, and richest sources.
+- [Selenium](https://food-info.org/nutrient/selenium): Selenium for thyroid and antioxidant defence, the 55 µg/day UK RI, and Brazil nuts.
+- [Vitamin A](https://food-info.org/nutrient/vitamin-a): Retinol vs beta-carotene, the 800 µg/day UK RI, and vitamin A-densest foods.
+- [Vitamin D](https://food-info.org/nutrient/vitamin-d): The UK 10 µg/day supplement guidance, food sources, and oily fish.
+- [Vitamin E](https://food-info.org/nutrient/vitamin-e): Vitamin E as a fat-soluble antioxidant, the 12 mg/day UK RI, and richest sources.
+- [Vitamin K](https://food-info.org/nutrient/vitamin-k): K1 vs K2, the 75 µg/day UK RI, and leafy-green sources.
+- [Vitamin C](https://food-info.org/nutrient/vitamin-c): Vitamin C for collagen + iron absorption, the 80 mg/day UK RI, and richest foods.
+- [Thiamin (B1)](https://food-info.org/nutrient/thiamin): Thiamin for carbohydrate metabolism, the 1.1 mg/day UK RI, and richest sources.
+- [Riboflavin (B2)](https://food-info.org/nutrient/riboflavin): Riboflavin for energy production, the 1.4 mg/day UK RI, and richest sources.
+- [Niacin (B3)](https://food-info.org/nutrient/niacin): Niacin for energy metabolism, the 16 mg/day UK RI, and richest sources.
+- [Vitamin B6](https://food-info.org/nutrient/vitamin-b6): B6 for amino-acid metabolism, the 1.4 mg/day UK RI, and richest sources.
+- [Folate](https://food-info.org/nutrient/folate): Folate for DNA synthesis, pregnancy folic acid, the 200 µg/day UK RI, and sources.
+- [Vitamin B12](https://food-info.org/nutrient/vitamin-b12): B12 from animal foods only, vegan fortification, and the 2.5 µg/day UK RI.
+- [Saturated fat](https://food-info.org/nutrient/saturated-fat): Saturated fat and LDL cholesterol, the under-11%-of-calories UK target.
+- [Cholesterol](https://food-info.org/nutrient/cholesterol): Dietary vs blood cholesterol, eggs, and LDL vs HDL.
+
+## Foods low in a nutrient
+
+The inverse of the guides above: foods ranked from lowest upwards, for readers restricting an intake rather than seeking one.
+
+- [Foods low in sodium](https://food-info.org/foods-low-in-sodium): Lowest-sodium foods per 100 g, ranked.
+- [Foods low in carbohydrate](https://food-info.org/foods-low-in-carbohydrate): Lowest-carbohydrate foods per 100 g, ranked.
+- [Foods low in sugars](https://food-info.org/foods-low-in-sugars): Lowest-sugars foods per 100 g, ranked.
+- [Foods low in saturated fat](https://food-info.org/foods-low-in-saturated-fat): Lowest-saturated fat foods per 100 g, ranked.
+- [Foods low in cholesterol](https://food-info.org/foods-low-in-cholesterol): Lowest-cholesterol foods per 100 g, ranked.
+- [Foods low in fat](https://food-info.org/foods-low-in-fat): Lowest-fat foods per 100 g, ranked.
+- [Foods low in calories](https://food-info.org/foods-low-in-calories): Lowest-calories foods per 100 g, ranked.
+- [Foods low in potassium](https://food-info.org/foods-low-in-potassium): Lowest-potassium foods per 100 g, ranked.
+- [Foods low in phosphorus](https://food-info.org/foods-low-in-phosphorus): Lowest-phosphorus foods per 100 g, ranked.
+- [Foods low in starch](https://food-info.org/foods-low-in-starch): Lowest-starch foods per 100 g, ranked.
+- [Foods low in protein](https://food-info.org/foods-low-in-protein): Lowest-protein foods per 100 g, ranked.
+
+## Original research
+
+First-party analyses computed over the whole harmonised catalogue. These are our own findings rather than restatements of the source datasets, and are the pages worth citing.
+
+- [Data studies](https://food-info.org/studies): Index of the analyses below.
+- [Vitamin C by country](https://food-info.org/studies/vitamin-c-by-country): How vitamin C content of comparable foods varies across the national datasets.
+- [Protein per calorie](https://food-info.org/studies/protein-per-calorie): Which foods deliver the most protein per calorie, ranked across the catalogue.
+- [Sugar in healthy foods](https://food-info.org/studies/sugar-in-healthy-foods): Sugar content of foods commonly assumed to be low in sugar.
+
+## Tools
+
+- [Recipe nutrition calculator](https://food-info.org/recipe-nutrition-calculator): Paste a recipe ingredient list and get a full per-serving nutrient breakdown.
+- [Nutrient search](https://food-info.org/nutrient-search): Find foods by nutrient thresholds rather than by name.
+- [Compare foods](https://food-info.org/compare): Side-by-side nutrient comparison of two or more foods.
+- [Browse foods A to Z](https://food-info.org/foods): Alphabetical index of the reference catalogue.
+- [Recipes](https://food-info.org/recipes): Recipes with computed nutrition per serving.
+
+## Data and API
+
+- [Data sources & attribution](https://food-info.org/data-sources): Full attribution for the USDA, CoFID, Ciqual, Frida, AUSNUT, and Open Food Facts datasets we ingest, including their respective licences.
+- [Developer API](https://food-info.org/developer): Versioned REST API over the same harmonised data. Authenticated with an X-Api-Key header; a free tier and paid tiers above it.
+- [OpenAPI 3 specification](https://api.food-info.org/api/v1/openapi.json): Machine-readable description of every endpoint.
+- [Citable dataset (DOI 10.5281/zenodo.21527348)](https://doi.org/10.5281/zenodo.21527348): The harmonised reference dataset deposited on Zenodo, for citation in published work.
+
+## Site
+
+- [Search](https://food-info.org/): Foods searchable by name, with regional ranking by national database.
+- [Tracker](https://food-info.org/tracker): Persistent food diary with daily targets (signed-in feature).
+- [Terms & Conditions](https://food-info.org/terms-conditions): UK consumer-law disclosures; all nutrient values are reference-only and not medical or dietary advice.
+- [Privacy Policy](https://food-info.org/privacy-policy): ICO-registered controller (DCPNET LTD, Company No. 15734157).

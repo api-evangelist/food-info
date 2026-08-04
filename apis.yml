@@ -1,0 +1,121 @@
+aid: food-info
+url: https://raw.githubusercontent.com/api-evangelist/food-info/refs/heads/main/apis.yml
+name: Food Info
+description: Food Info serves harmonised nutrient data for reference foods over a versioned REST API.
+  It merges six food-composition datasets — USDA FoodData Central, McCance & Widdowson's CoFID, ANSES
+  Ciqual, DTU Frida, AUSNUT and Open Food Facts — into a single schema, so a caller can query nutrients
+  across sources without reconciling each publisher's format. Endpoints cover food search, a full nutrient
+  panel per food, a nutrient catalogue, reverse nutrient search for the richest and poorest reference
+  foods, and recipe parsing and analysis that resolves raw ingredient lines into per-line nutrition. Authentication
+  is an X-Api-Key header, with a free tier of 10 requests a minute and 100 a day. HTTPS only and CORS
+  disabled, so it is built for server-to-server use. The underlying dataset carries a citable Zenodo DOI,
+  which is unusual provenance for a commercial data API.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/food-info.png
+created: '2026-08-04'
+modified: '2026-08-04'
+specificationVersion: '0.21'
+type: Index
+position: Producing
+access: 3rd-Party
+kind: contract
+tags:
+- Nutrition
+- Food
+- Food Composition
+- Nutrients
+- Data
+- Open Data
+- Dietetics
+- Recipes
+- Health
+- Research
+apis:
+- aid: food-info:food-info-api
+  name: Food Info API
+  description: Nutrition data for millions of foods, merged from six national food-composition datasets
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://food-info.org/developer
+  baseURL: https://api.food-info.org
+  tags:
+  - Nutrition
+  - Food
+  - Nutrients
+  - Recipes
+  - Open Data
+  properties:
+  - url: openapi/food-info-openapi.json
+    type: OpenAPI
+  - url: https://api.food-info.org/api/v1/openapi.json
+    type: X-OpenAPI-Source
+  - url: https://food-info.org/developer
+    type: Documentation
+  - url: authentication/food-info-authentication.yml
+    type: Authentication
+  - url: plans/food-info-plans.yml
+    type: Plans
+  - url: conformance/food-info-data-provenance.yml
+    type: Conformance
+  - url: https://food-info.org/data-sources
+    type: X-DataSources
+  - url: https://doi.org/10.5281/zenodo.21527348
+    type: X-DatasetDOI
+  - url: https://food-info.org/terms-conditions
+    type: TermsOfService
+  - url: https://food-info.org/privacy-policy
+    type: PrivacyPolicy
+  - url: https://food-info.org/llms.txt
+    type: LlmsText
+common:
+- url: https://food-info.org
+  type: Website
+- url: https://food-info.org/developer
+  type: Documentation
+- url: https://food-info.org/terms-conditions
+  type: TermsOfService
+- url: https://food-info.org/privacy-policy
+  type: PrivacyPolicy
+- url: https://food-info.org/llms.txt
+  type: LlmsText
+- url: authentication/food-info-authentication.yml
+  type: Authentication
+- url: plans/food-info-plans.yml
+  type: Plans
+- url: conformance/food-info-data-provenance.yml
+  type: Conformance
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+X-Discovery:
+  date: '2026-08-04'
+  method: probed
+  note: Requested in api-search/inbox#2. Every claim checked before profiling.
+  findings:
+  - surface: OpenAPI
+    url: https://api.food-info.org/api/v1/openapi.json
+    http_status: 200
+    real: true
+    note: OpenAPI 3.0.4, 8 operations, 24 schemas, X-Api-Key, real server. 0 of 8 operations carry an
+      operationId.
+  - surface: LlmsTxt
+    url: https://food-info.org/llms.txt
+    http_status: 200
+    real: true
+    note: 8,462 bytes — LIVE, though the submission said none was published yet.
+  - surface: DatasetDOI
+    url: https://doi.org/10.5281/zenodo.21527348
+    http_status: 200
+    real: true
+    note: Resolves to Zenodo; a citable dataset record.
+  - surface: DataSources
+    url: https://food-info.org/data-sources
+    http_status: 200
+    real: true
+  - surface: WellKnown
+    url: https://food-info.org/.well-known/api-catalog
+    http_status: 404
+    real: false
+  - surface: Control
+    url: https://food-info.org/zzz-control-nonsense
+    http_status: 404
+    real: false
+    note: Both hosts 404 correctly on a control path — no SPA catch-all, so the probes above are trustworthy.

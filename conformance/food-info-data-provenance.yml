@@ -1,0 +1,21 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://food-info.org/data-sources
+description: Harmonises six national and open food-composition datasets into one schema,
+  and publishes a citable dataset DOI — provenance most data APIs do not offer.
+verified: '2026-08-04'
+datasets:
+- USDA FoodData Central (US)
+- McCance & Widdowson's CoFID (UK)
+- ANSES Ciqual (France)
+- DTU Frida (Denmark)
+- AUSNUT (Australia)
+- Open Food Facts
+dataset_doi: https://doi.org/10.5281/zenodo.21527348
+evidence:
+- url: https://food-info.org/data-sources
+  status: 200
+- url: https://doi.org/10.5281/zenodo.21527348
+  status: 200
+  note: DOI resolves to Zenodo
