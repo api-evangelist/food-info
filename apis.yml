@@ -65,7 +65,25 @@ apis:
     type: PrivacyPolicy
   - url: https://food-info.org/llms.txt
     type: LlmsText
+  - url: overlays/food-info-overlay.yaml
+    type: Overlay
+  - url: examples/food-info-examples.yml
+    type: Examples
+  - url: rate-limits/food-info-rate-limits.yml
+    type: RateLimits
+  - url: errors/food-info-problem-types.yml
+    type: ErrorCatalog
+  - url: conventions/food-info-conventions.yml
+    type: Conventions
+  - url: data-model/food-info-data-model.yml
+    type: DataModel
+  - url: mcp/food-info-tool-crosswalk.yml
+    type: ToolCrosswalk
 common:
+- type: AgenticAccess
+  url: agentic-access/food-info-agentic-access.yml
+- type: DomainSecurity
+  url: security/food-info-domain-security.yml
 - url: https://food-info.org
   type: Website
 - url: https://food-info.org/developer
@@ -82,6 +100,42 @@ common:
   type: Plans
 - url: conformance/food-info-data-provenance.yml
   type: Conformance
+- url: conformance/food-info-conformance.yml
+  type: Conformance
+- url: https://food-info.org/developer
+  type: DeveloperPortal
+- url: https://food-info.org/contact
+  type: Support
+- url: well-known/food-info-well-known.yml
+  type: WellKnown
+- url: well-known/food-info-security.txt
+  type: SecurityTxt
+- url: security/food-info-vulnerability-disclosure.yml
+  type: VulnerabilityDisclosure
+- url: https://food-info.org/.well-known/security.txt
+  type: Security
+- url: rate-limits/food-info-rate-limits.yml
+  type: RateLimits
+- url: errors/food-info-problem-types.yml
+  type: ErrorCatalog
+- url: conventions/food-info-conventions.yml
+  type: Conventions
+- url: lifecycle/food-info-lifecycle.yml
+  type: Lifecycle
+- url: data-model/food-info-data-model.yml
+  type: DataModel
+- url: mcp/food-info-mcp.yml
+  type: MCPServer
+- url: mcp/food-info-tool-crosswalk.yml
+  type: ToolCrosswalk
+- url: skills/_index.yml
+  type: AgentSkill
+- url: overlays/food-info-overlay.yaml
+  type: Overlay
+- url: examples/food-info-examples.yml
+  type: Examples
+- url: llms/food-info-llms.txt
+  type: LLMsTxt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -94,13 +148,15 @@ X-Discovery:
     url: https://api.food-info.org/api/v1/openapi.json
     http_status: 200
     real: true
-    note: OpenAPI 3.0.4, 8 operations, 24 schemas, X-Api-Key, real server. 0 of 8 operations carry an
-      operationId.
+    note: OpenAPI 3.0.4, 8 operations, 24 schemas, X-Api-Key, real server. All 8 operations carry an operationId
+      as of the 2026-08-04 re-harvest — added by the provider the same day the gap was raised in api-search/inbox#2.
   - surface: LlmsTxt
     url: https://food-info.org/llms.txt
     http_status: 200
     real: true
-    note: 8,462 bytes — LIVE, though the submission said none was published yet.
+    note: 8,462 bytes — LIVE. The submission said none was published; the provider confirmed it is server-generated
+      rather than static, which is why it was overlooked. Re-fetched 2026-08-04 and byte-identical to
+      the copy held.
   - surface: DatasetDOI
     url: https://doi.org/10.5281/zenodo.21527348
     http_status: 200
@@ -114,8 +170,24 @@ X-Discovery:
     url: https://food-info.org/.well-known/api-catalog
     http_status: 404
     real: false
+    note: No RFC 9727 api-catalog on either host. A re-probe on 2026-08-04 did find an RFC 9116
+      security.txt at https://food-info.org/.well-known/security.txt (200) and a Content-Signal
+      declaration in robots.txt; both are captured in well-known/.
   - surface: Control
     url: https://food-info.org/zzz-control-nonsense
     http_status: 404
     real: false
     note: Both hosts 404 correctly on a control path — no SPA catch-all, so the probes above are trustworthy.
+  reharvests:
+  - date: '2026-08-04'
+    trigger: Provider reply on api-search/inbox#2
+    note: Provider added operationIds to all 8 operations and confirmed the llms.txt. Spec re-fetched
+      from the first-party source and archived verbatim to openapi/_original/.
+    source: https://api.food-info.org/api/v1/openapi.json
+    http_status: 200
+    md5: 21560d8ec8635faec94658467f56d6c4
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
