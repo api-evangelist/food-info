@@ -30,55 +30,90 @@ tags:
 - Health
 - Research
 apis:
-- aid: food-info:food-info-api
-  name: Food Info API
-  description: Nutrition data for millions of foods, merged from six national food-composition datasets
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: food-info:food-info-apiv1-api
+  name: Food Info API V1 API
+  description: The ApiV1 API from Food Info — 6 operation(s) for apiv1.
   humanURL: https://food-info.org/developer
   baseURL: https://api.food-info.org
   tags:
-  - Nutrition
-  - Food
-  - Nutrients
-  - Recipes
-  - Open Data
+  - ApiV1
   properties:
-  - url: openapi/food-info-openapi.json
-    type: OpenAPI
-  - url: https://api.food-info.org/api/v1/openapi.json
-    type: X-OpenAPI-Source
-  - url: https://food-info.org/developer
-    type: Documentation
-  - url: authentication/food-info-authentication.yml
-    type: Authentication
-  - url: plans/food-info-plans.yml
-    type: Plans
-  - url: conformance/food-info-data-provenance.yml
-    type: Conformance
-  - url: https://food-info.org/data-sources
-    type: X-DataSources
-  - url: https://doi.org/10.5281/zenodo.21527348
-    type: X-DatasetDOI
-  - url: https://food-info.org/terms-conditions
-    type: TermsOfService
-  - url: https://food-info.org/privacy-policy
-    type: PrivacyPolicy
-  - url: https://food-info.org/llms.txt
-    type: LlmsText
-  - url: overlays/food-info-overlay.yaml
-    type: Overlay
-  - url: examples/food-info-examples.yml
-    type: Examples
-  - url: rate-limits/food-info-rate-limits.yml
-    type: RateLimits
-  - url: errors/food-info-problem-types.yml
-    type: ErrorCatalog
-  - url: conventions/food-info-conventions.yml
-    type: Conventions
-  - url: data-model/food-info-data-model.yml
-    type: DataModel
-  - url: mcp/food-info-tool-crosswalk.yml
-    type: ToolCrosswalk
+  - type: OpenAPI
+    url: openapi/food-info-apiv1-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://api.food-info.org/api/v1/openapi.json
+  - type: Documentation
+    url: https://food-info.org/developer
+  - type: Authentication
+    url: authentication/food-info-authentication.yml
+  - type: Plans
+    url: plans/food-info-plans.yml
+  - type: Conformance
+    url: conformance/food-info-data-provenance.yml
+  - type: X-DataSources
+    url: https://food-info.org/data-sources
+  - type: X-DatasetDOI
+    url: https://doi.org/10.5281/zenodo.21527348
+  - type: TermsOfService
+    url: https://food-info.org/terms-conditions
+  - type: PrivacyPolicy
+    url: https://food-info.org/privacy-policy
+  - type: LlmsText
+    url: https://food-info.org/llms.txt
+  - type: Examples
+    url: examples/food-info-examples.yml
+  - type: RateLimits
+    url: rate-limits/food-info-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/food-info-problem-types.yml
+  - type: Conventions
+    url: conventions/food-info-conventions.yml
+  - type: DataModel
+    url: data-model/food-info-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/food-info-tool-crosswalk.yml
+- aid: food-info:food-info-recipesapi-api
+  name: Food Info Recipes API API
+  description: The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
+  humanURL: https://food-info.org/developer
+  baseURL: https://api.food-info.org
+  tags:
+  - RecipesApi
+  properties:
+  - type: OpenAPI
+    url: openapi/food-info-recipesapi-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://api.food-info.org/api/v1/openapi.json
+  - type: Documentation
+    url: https://food-info.org/developer
+  - type: Authentication
+    url: authentication/food-info-authentication.yml
+  - type: Plans
+    url: plans/food-info-plans.yml
+  - type: Conformance
+    url: conformance/food-info-data-provenance.yml
+  - type: X-DataSources
+    url: https://food-info.org/data-sources
+  - type: X-DatasetDOI
+    url: https://doi.org/10.5281/zenodo.21527348
+  - type: TermsOfService
+    url: https://food-info.org/terms-conditions
+  - type: PrivacyPolicy
+    url: https://food-info.org/privacy-policy
+  - type: LlmsText
+    url: https://food-info.org/llms.txt
+  - type: Examples
+    url: examples/food-info-examples.yml
+  - type: RateLimits
+    url: rate-limits/food-info-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/food-info-problem-types.yml
+  - type: Conventions
+    url: conventions/food-info-conventions.yml
+  - type: DataModel
+    url: data-model/food-info-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/food-info-tool-crosswalk.yml
 common:
 - type: AgenticAccess
   url: agentic-access/food-info-agentic-access.yml
