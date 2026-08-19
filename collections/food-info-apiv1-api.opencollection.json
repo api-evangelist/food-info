@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Food Info API V1 API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ApiV1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List the nutrient catalogue (id, name, unit, category) so callers can discover the\n            `nutrientId` values used by the reverse-search endpoints.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.food-info.org/api/v1/nutrients"
+          },
+          "docs": "List the nutrient catalogue (id, name, unit, category) so callers can discover the\n            `nutrientId` values used by the reverse-search endpoints."
+        },
+        {
+          "info": {
+            "name": "Search foods by name (case-insensitive substring).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.food-info.org/api/v1/foods/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "home_nation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search foods by name (case-insensitive substring)."
+        },
+        {
+          "info": {
+            "name": "Look up a single food by FoodData Central id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.food-info.org/api/v1/foods/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Look up a single food by FoodData Central id."
+        },
+        {
+          "info": {
+            "name": "Full nutrient panel for a food: grouped per-100 g + per-serving amounts and\n            % reference-intake values. `source` selects the RI basis (\"UK RI\" / \"FDA 2016\").",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.food-info.org/api/v1/foods/:id/panel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "portionId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Full nutrient panel for a food: grouped per-100 g + per-serving amounts and\n            % reference-intake values. `source` selects the RI basis (\"UK RI\" / \"FDA 2016\")."
+        },
+        {
+          "info": {
+            "name": "Reverse nutrient search: reference foods richest in a nutrient, per 100 g, highest first.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.food-info.org/api/v1/nutrients/:nutrientId/top-foods",
+            "params": [
+              {
+                "name": "nutrientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "home_nation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reverse nutrient search: reference foods richest in a nutrient, per 100 g, highest first."
+        },
+        {
+          "info": {
+            "name": "Inverse of top-foods: reference foods with the LEAST of a nutrient, per 100 g.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.food-info.org/api/v1/nutrients/:nutrientId/bottom-foods",
+            "params": [
+              {
+                "name": "nutrientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "home_nation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Inverse of top-foods: reference foods with the LEAST of a nutrient, per 100 g."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

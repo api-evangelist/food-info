@@ -1,0 +1,16 @@
+User-agent: *
+Content-Signal: search=yes, ai-train=yes
+Disallow: /api/
+Disallow: /foods/search
+Disallow: /tracker
+Disallow: /auth/
+Disallow: /admin/
+Disallow: /account
+Disallow: /developer
+Disallow: /practitioner/
+Disallow: /meal-plans
+
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://food-info.org/sitemap.xml

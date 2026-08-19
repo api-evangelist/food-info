@@ -1,0 +1,86 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+description: >-
+  Cross-cutting standards conformance for Food Info, derived from the published OpenAPI, the live
+  well-known surface, and the provider's own site index. No certification or compliance program
+  (SOC 2, ISO 27001, HIPAA, PCI DSS) is published, so none is asserted here.
+verified: '2026-08-04'
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    openapi: 3.0.4 served first-party at https://api.food-info.org/api/v1/openapi.json; 8 operations,
+    24 component schemas, every operation carrying a unique operationId.
+- id: rfc7807-problem-details
+  conforms: partial
+  evidence: >-
+    All declared 4xx responses use the ProblemDetails member set (type/title/status/detail/instance)
+    but are served as application/json rather than application/problem+json, and no problem-type URIs
+    are published.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Same shape as RFC 7807; the +json problem media type is not used.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: >-
+    https://food-info.org/.well-known/security.txt returns 200 with Contact, Expires,
+    Preferred-Languages and Canonical fields.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog 404s on both food-info.org and api.food-info.org.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://food-info.org/llms.txt returns 200 (8,462 bytes, text/markdown) in llms.txt format with
+    an H1, a blockquote summary and sectioned link lists.
+- id: content-signals
+  conforms: true
+  evidence: >-
+    robots.txt carries a Cloudflare Content-Signal declaration (search=yes, ai-train=yes) — an
+    explicit machine-readable AI-usage position.
+- id: oauth2
+  conforms: false
+  evidence: The only securityScheme is an apiKey in the X-Api-Key header.
+- id: oidc
+  conforms: false
+- id: hsts
+  conforms: true
+  evidence: 'strict-transport-security: max-age=2592000 observed on both hosts 2026-08-04.'
+- id: tls-1.3
+  conforms: true
+  evidence: TLSv1.3 negotiated on food-info.org and api.food-info.org.
+- id: dnssec
+  conforms: false
+  evidence: No DNSSEC on food-info.org.
+- id: eu-reg-1169-2011
+  conforms: true
+  evidence: >-
+    Reference Intakes follow EU Regulation 1169/2011 by default, with an FDA 2016 basis selectable
+    via the `source` parameter on getFoodNutrientPanel. Stated in the provider's llms.txt and
+    implemented as a spec parameter.
+- id: fdc-food-identifiers
+  conforms: true
+  evidence: >-
+    Foods are addressed by USDA FoodData Central id (getFood, getFoodNutrientPanel), so ids are
+    interoperable with the upstream public dataset rather than provider-private.
+- id: json-api
+  conforms: false
+  evidence: Collections are bare JSON arrays with no envelope or document structure.
+- id: pagination
+  conforms: false
+  evidence: A `limit` parameter only; no cursor, offset, page or total-count.
+- id: idempotency
+  conforms: false
+  evidence: No idempotency-key contract documented; the two POSTs are non-persisting calculators.
+compliance_program:
+  published: false
+  certifications: []
+  note: >-
+    No trust centre, certification list or compliance page was found. The privacy policy names an
+    ICO-registered UK controller (DCPNET LTD, Company No. 15734157), which is a regulatory
+    registration rather than a certification.
+related:
+- conformance/food-info-data-provenance.yml
+- security/food-info-domain-security.yml
+- well-known/food-info-well-known.yml

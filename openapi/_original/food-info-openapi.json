@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Food Info",
-    "description": "Nutrition data for millions of foods, merged from six national food-composition datasets: USDA FoodData Central (US), McCance & Widdowson's CoFID (UK), ANSES Ciqual (France), the Danish Food Composition Database, FSANZ AUSNUT (Australia/NZ), and Open Food Facts for branded products.\n\nAuthenticate with an API key in the `X-Api-Key` header. A free account gets a key with 10 requests/minute and 100/day; the Practitioner plan raises that to 60/minute and 10,000/day. Quotas are counted per account, not per key. Every response carries `X-RateLimit-Limit-Minute`, `X-RateLimit-Limit-Day` and `X-RateLimit-Tier`.\n\nServer-to-server only: CORS is not enabled, so keys stay off the browser.",
+    "description": "Nutrition data for millions of foods, merged from five national food-composition datasets: USDA FoodData Central (US), McCance & Widdowson's CoFID (UK), ANSES Ciqual (France), the Danish Food Composition Database, and FSANZ AUSNUT (Australia/NZ), plus Open Food Facts for branded products.\n\nAuthenticate with an API key in the `X-Api-Key` header. A free account gets a key with 10 requests/minute and 100/day; the Practitioner plan raises that to 60/minute and 10,000/day. Quotas are counted per account, not per key. Every response carries `X-RateLimit-Limit-Minute`, `X-RateLimit-Limit-Day` and `X-RateLimit-Tier`.\n\nServer-to-server only: CORS is not enabled, so keys stay off the browser.",
     "contact": {
       "name": "Food Info",
       "url": "https://food-info.org/developer",
@@ -22,6 +22,7 @@
           "ApiV1"
         ],
         "summary": "List the nutrient catalogue (id, name, unit, category) so callers can discover the\n            `nutrientId` values used by the reverse-search endpoints.",
+        "operationId": "listNutrients",
         "responses": {
           "200": {
             "description": "OK",
@@ -45,6 +46,7 @@
           "ApiV1"
         ],
         "summary": "Search foods by name (case-insensitive substring).",
+        "operationId": "searchFoods",
         "parameters": [
           {
             "name": "q",
@@ -103,6 +105,7 @@
           "ApiV1"
         ],
         "summary": "Look up a single food by FoodData Central id.",
+        "operationId": "getFood",
         "parameters": [
           {
             "name": "id",
@@ -144,6 +147,7 @@
           "ApiV1"
         ],
         "summary": "Full nutrient panel for a food: grouped per-100 g + per-serving amounts and\n            % reference-intake values. `source` selects the RI basis (\"UK RI\" / \"FDA 2016\").",
+        "operationId": "getFoodNutrientPanel",
         "parameters": [
           {
             "name": "id",
@@ -200,6 +204,7 @@
           "ApiV1"
         ],
         "summary": "Reverse nutrient search: reference foods richest in a nutrient, per 100 g, highest first.",
+        "operationId": "listTopFoodsByNutrient",
         "parameters": [
           {
             "name": "nutrientId",
@@ -267,6 +272,7 @@
           "ApiV1"
         ],
         "summary": "Inverse of top-foods: reference foods with the LEAST of a nutrient, per 100 g.",
+        "operationId": "listBottomFoodsByNutrient",
         "parameters": [
           {
             "name": "nutrientId",
@@ -334,6 +340,7 @@
           "RecipesApi"
         ],
         "summary": "Parse raw ingredient lines into structured {quantity, unit, food, …}. No DB, no food match.",
+        "operationId": "parseRecipeIngredients",
         "requestBody": {
           "content": {
             "application/json": {
@@ -386,6 +393,7 @@
           "RecipesApi"
         ],
         "summary": "Analyze a recipe → per-line resolution + per-serving/per-100 g nutrition + source attribution + review flags.",
+        "operationId": "analyzeRecipeNutrition",
         "requestBody": {
           "content": {
             "application/json": {

@@ -1,0 +1,79 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+description: >-
+  Binding between the candidate MCP tool surface (mcp/food-info-mcp.yml) and the backing OpenAPI
+  operations. Food Info publishes one machine-readable surface — REST — so there is no divergence to
+  reconcile: every tool binds to exactly one operation and every operation has a tool. Recorded so
+  the mapping is explicit and each tool's real inputSchema is the operation's parameters/requestBody
+  rather than a guessed shape.
+verified: '2026-08-04'
+surfaces:
+  openapi:
+    file: openapi/food-info-openapi.json
+    source: https://api.food-info.org/api/v1/openapi.json
+    status: 200
+    gated: false
+    operations: 8
+  graphql:
+    endpoint: null
+    note: No GraphQL surface; /graphql on the API host returns the Cloudflare challenge, not a schema.
+  mcp:
+    url: null
+    gated: null
+    note: No MCP server is published — the tool side of this crosswalk is a candidate, not live.
+crosswalk:
+- tool: list_nutrients
+  category: catalogue
+  rest: [listNutrients]
+  binding: rest
+  confidence: high
+- tool: search_foods
+  category: catalogue
+  rest: [searchFoods]
+  binding: rest
+  confidence: high
+  note: Inputs q, home_nation, limit (default 25).
+- tool: get_food
+  category: catalogue
+  rest: [getFood]
+  binding: rest
+  confidence: high
+  note: Required integer path id (FoodData Central).
+- tool: get_food_nutrient_panel
+  category: catalogue
+  rest: [getFoodNutrientPanel]
+  binding: rest
+  confidence: high
+  note: Inputs id (required), portionId, source ("UK RI" / "FDA 2016").
+- tool: list_top_foods_by_nutrient
+  category: reverse-search
+  rest: [listTopFoodsByNutrient]
+  binding: rest
+  confidence: high
+- tool: list_bottom_foods_by_nutrient
+  category: reverse-search
+  rest: [listBottomFoodsByNutrient]
+  binding: rest
+  confidence: high
+- tool: parse_recipe_ingredients
+  category: recipes
+  rest: [parseRecipeIngredients]
+  binding: rest
+  confidence: high
+  note: Body RecipeParseRequest { lines[] }.
+- tool: analyze_recipe_nutrition
+  category: recipes
+  rest: [analyzeRecipeNutrition]
+  binding: rest
+  confidence: high
+  note: Body RecipeAnalysisRequest { lines[], region, servings }.
+mcp_only: []
+rest_only: []
+coverage:
+  tools_named: 8
+  tools_bound: 8
+  mcp_only: 0
+  rest_ops_total: 8
+  rest_ops_with_tool: 8
+  binding_rate: 1.0

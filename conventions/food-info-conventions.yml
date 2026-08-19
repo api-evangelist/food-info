@@ -1,0 +1,103 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+description: >-
+  Cross-cutting request/response semantics for the Food Info API, derived from the published OpenAPI
+  and from live response headers observed on 2026-08-04. This is a small, read-mostly data API: eight
+  operations, six of them GET, two POST calculators that create nothing server-side.
+verified: '2026-08-04'
+authentication:
+  style: api-key
+  header: X-Api-Key
+  transport: https-only
+  cors: disabled
+  audience: server-to-server
+  failure: bare 401 with an empty body (observed; not declared in the spec)
+  artifact: authentication/food-info-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  spec_version: v1
+  policy_url: null
+  note: The version segment is in every path; no header or date-based version negotiation.
+pagination:
+  style: limit-only
+  supported: partial
+  params:
+  - name: limit
+    in: query
+    default: 25
+    applies_to: [searchFoods, listTopFoodsByNutrient, listBottomFoodsByNutrient]
+  response_fields: []
+  note: >-
+    There is no cursor, offset, page parameter or total-count field. Collection responses are bare
+    JSON arrays with no envelope, so a caller cannot page past the first `limit` results.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency-key contract is documented and none is needed by the current surface — the six
+    GETs are naturally idempotent and the two POSTs (parseRecipeIngredients, analyzeRecipeNutrition)
+    are pure calculators that persist nothing, so a retry is safe but is billed against the quota
+    again.
+filtering:
+  params:
+  - name: q
+    applies_to: [searchFoods]
+    note: Case-insensitive substring match on food name.
+  - name: home_nation
+    applies_to: [searchFoods, listTopFoodsByNutrient, listBottomFoodsByNutrient]
+    note: Regional weighting — biases results toward the matching national dataset.
+  - name: source
+    applies_to: [getFoodNutrientPanel]
+    note: Selects the reference-intake basis; documented values "UK RI" and "FDA 2016".
+  - name: portionId
+    applies_to: [getFoodNutrientPanel]
+    note: Selects one of the food's available servings.
+field_expansion:
+  supported: false
+  note: >-
+    No sparse-fieldset or expand parameter. Depth is chosen by endpoint instead — `getFood` returns
+    the summary, `getFoodNutrientPanel` returns the full grouped panel.
+metadata:
+  supported: false
+request_tracing:
+  request_id_header: fly-request-id
+  observed: '2026-08-04'
+  note: >-
+    Emitted by the fly.io edge rather than by the application, and not documented — usable for
+    support correspondence but not a contractual correlation id. No X-Request-Id is accepted on the
+    way in.
+error_envelope:
+  schema: ProblemDetails
+  media_type: application/json
+  spec: RFC 7807 member set
+  artifact: errors/food-info-problem-types.yml
+rate_limit_signalling:
+  headers: [X-RateLimit-Limit-Minute, X-RateLimit-Limit-Day, X-RateLimit-Tier]
+  remaining_header: null
+  reset_header: null
+  retry_after: not documented
+  artifact: rate-limits/food-info-rate-limits.yml
+content_types:
+  request: application/json
+  response: application/json
+  compression: not documented
+caching:
+  headers_documented: false
+  observed: 'cf-cache-status: DYNAMIC'
+data_conventions:
+  units: per 100 g for all nutrient amounts, with per-serving amounts on the panel
+  reference_intakes: EU Reg. 1169/2011 by default, FDA 2016 toggle via `source`
+  identifiers: FoodData Central integer ids for foods; integer nutrient ids from listNutrients
+  enums: [FoodSource, DataType, UnitKind]
+related:
+- authentication/food-info-authentication.yml
+- errors/food-info-problem-types.yml
+- rate-limits/food-info-rate-limits.yml
+- lifecycle/food-info-lifecycle.yml
+- conformance/food-info-conformance.yml
+gaps:
+- No documented request-id echo, no idempotency contract, no pagination beyond `limit`, and no
+  documented 429/Retry-After behaviour.

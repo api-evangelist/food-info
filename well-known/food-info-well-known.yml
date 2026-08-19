@@ -1,0 +1,68 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of the food-info.org and api.food-info.org well-known surface
+description: >-
+  The /.well-known/ discovery surface for Food Info. The website host publishes an RFC 9116
+  security.txt; every other well-known path 404s on both hosts. The website also publishes a
+  robots.txt carrying a Content-Signal AI-usage declaration, recorded here as a consent signal.
+verified: '2026-08-04'
+hosts:
+- host: https://food-info.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/plain; charset=utf-8
+    bytes: 155
+    spec: RFC 9116
+    file: food-info-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /security.txt
+    status: 404
+    note: RFC 9116 legacy top-level location; only the /.well-known/ copy is served.
+- host: https://api.food-info.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+consent_signals:
+- path: /robots.txt
+  host: https://food-info.org
+  status: 200
+  file: food-info-robots.txt
+  content_signal: search=yes, ai-train=yes
+  note: >-
+    Cloudflare Content-Signals Policy declaration on the site-wide robots.txt. Search indexing
+    and AI training are both permitted; /api/, /developer, /tracker, /auth/, /admin/, /account,
+    /practitioner/ and /meal-plans are disallowed to crawlers, and Bytespider is fully blocked.
+gaps:
+- No /.well-known/api-catalog (RFC 9727), so there is no machine-readable index of the API surface
+  beyond the OpenAPI at https://api.food-info.org/api/v1/openapi.json.
+- No agent card at either well-known path on either host.
+x-evidence:
+  fetched: '2026-08-04'
+  note: >-
+    HTML pages on both hosts sit behind a Cloudflare managed challenge and answer 403 to
+    non-browser clients; the text/plain and JSON surfaces recorded above pass through
+    unchallenged, so these statuses are directly observed rather than inferred.

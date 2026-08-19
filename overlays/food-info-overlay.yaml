@@ -1,0 +1,76 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Food Info
+  version: 1.0.0
+x-generated: '2026-08-04'
+x-method: generated
+x-source: openapi/food-info-openapi.json
+x-note: >-
+  Non-destructive enhancements over the provider's published OpenAPI. Applying this overlay adds the
+  discovery/provenance extensions, the rate-limit and error contract the spec describes in prose but
+  does not model, and per-operation agent-access hints. It never alters the provider's own
+  descriptions, schemas or paths.
+extends: openapi/food-info-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/food-info
+    x-dataset-doi: https://doi.org/10.5281/zenodo.21527348
+    x-data-sources: https://food-info.org/data-sources
+    x-llms-txt: https://food-info.org/llms.txt
+    x-security-txt: https://food-info.org/.well-known/security.txt
+    x-rate-limits:
+      free: {per_minute: 10, per_day: 100}
+      practitioner: {per_minute: 60, per_day: 10000}
+      scope: account
+      headers: [X-RateLimit-Limit-Minute, X-RateLimit-Limit-Day, X-RateLimit-Tier]
+    x-conventions: conventions/food-info-conventions.yml
+    x-error-catalog: errors/food-info-problem-types.yml
+- target: $.info
+  update:
+    x-license-note: >-
+      Nutrient values are harmonised from six source datasets, each under its own licence; see the
+      data-sources page for per-dataset attribution requirements.
+- target: $.servers[0]
+  update:
+    description: Production. HTTPS only, CORS disabled — server-to-server use.
+- target: $.tags
+  update:
+  - name: ApiV1
+    description: Reference-food catalogue, nutrient catalogue, and reverse nutrient search.
+  - name: RecipesApi
+    description: Recipe ingredient parsing and per-recipe nutrition analysis. Computed, not stored.
+- target: $.paths['/api/v1/foods/search'].get
+  update:
+    x-agentic-access: {action-class: connected, consequence: read}
+    x-pagination: {style: limit-only, param: limit, default: 25, cursor: false}
+- target: $.paths['/api/v1/nutrients'].get
+  update:
+    x-agentic-access: {action-class: connected, consequence: read}
+    x-cacheable: >-
+      Stable catalogue — cache client-side rather than re-fetching, since quota is counted per
+      account.
+- target: $.paths['/api/v1/foods/{id}/panel'].get
+  update:
+    x-agentic-access: {action-class: connected, consequence: read}
+    x-reference-intake-basis: 'source parameter: "UK RI" (EU Reg. 1169/2011, default) or "FDA 2016"'
+- target: $.paths['/api/v1/recipes/analyze'].post
+  update:
+    x-agentic-access: {action-class: acting, consequence: write}
+    x-side-effects: none
+    x-idempotent: >-
+      Safe to retry — the operation persists nothing, though each attempt is billed against the
+      account quota.
+- target: $.paths['/api/v1/recipes/parse'].post
+  update:
+    x-agentic-access: {action-class: acting, consequence: write}
+    x-side-effects: none
+    x-idempotent: Safe to retry; persists nothing.
+- target: $.components.schemas.ProblemDetails
+  update:
+    x-spec: RFC 7807 member set, served as application/json rather than application/problem+json
+- target: $.components.schemas.FoodSource
+  update:
+    x-note: >-
+      Eight source datasets are enumerated in the contract — two more (Cnf, the Canadian Nutrient
+      File, and Fineli, Finland) than the six named on the marketing surface.

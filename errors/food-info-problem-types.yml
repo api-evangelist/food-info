@@ -1,0 +1,69 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+format: rfc7807
+description: >-
+  Error catalogue derived from the 4xx responses declared in the published OpenAPI. Every declared
+  error returns the ASP.NET Core `ProblemDetails` shape (type/title/status/detail/instance plus
+  additional properties) under `application/json` — the RFC 7807 / RFC 9457 member set, though the
+  media type is plain `application/json` rather than `application/problem+json`.
+verified: '2026-08-04'
+envelope:
+  schema: ProblemDetails
+  media_type: application/json
+  members:
+  - name: type
+    type: string
+    nullable: true
+  - name: title
+    type: string
+    nullable: true
+  - name: status
+    type: integer
+    nullable: true
+  - name: detail
+    type: string
+    nullable: true
+  - name: instance
+    type: string
+    nullable: true
+  extensible: true
+problems:
+- status: 400
+  title: Bad Request
+  schema: ProblemDetails
+  source_operations:
+  - openapi/food-info-openapi.json#searchFoods
+  - openapi/food-info-openapi.json#listTopFoodsByNutrient
+  - openapi/food-info-openapi.json#listBottomFoodsByNutrient
+  - openapi/food-info-openapi.json#parseRecipeIngredients
+  - openapi/food-info-openapi.json#analyzeRecipeNutrition
+  remediation: >-
+    Check the query or body parameters against the spec — an unparseable `limit`, a missing search
+    term, or malformed recipe `lines` are the shapes that reach this response.
+- status: 404
+  title: Not Found
+  schema: ProblemDetails
+  source_operations:
+  - openapi/food-info-openapi.json#getFood
+  - openapi/food-info-openapi.json#getFoodNutrientPanel
+  - openapi/food-info-openapi.json#listTopFoodsByNutrient
+  - openapi/food-info-openapi.json#listBottomFoodsByNutrient
+  remediation: >-
+    The FoodData Central `id` or the `nutrientId` does not exist in the harmonised catalogue.
+    Resolve ids first with `searchFoods` or `listNutrients`.
+undeclared_but_observed:
+- status: 401
+  title: Unauthorized
+  observed: '2026-08-04'
+  request: GET https://api.food-info.org/api/v1/nutrients (no key, and with an invalid key)
+  body: empty (content-length 0)
+  note: >-
+    Missing or invalid `X-Api-Key` returns a bare 401 with no body — no ProblemDetails, no
+    WWW-Authenticate header. This response is not declared on any operation in the OpenAPI.
+gaps:
+- No 401 / 403 / 429 / 5xx responses declared on any operation, so authentication failure, quota
+  exhaustion and server error are all undescribed in the contract.
+- No `type` URI registry — the ProblemDetails `type` member is declared but no stable problem-type
+  URIs are published, so errors cannot be branched on programmatically beyond the status code.
+- Media type is `application/json`, not `application/problem+json`.

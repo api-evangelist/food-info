@@ -1,37 +1,133 @@
-# Food Info
+# Food Info (food-info)
 
-Harmonised nutrient data for reference foods, over a versioned REST API.
+Food Info serves harmonised nutrient data for reference foods over a versioned REST API. It merges six food-composition datasets — USDA FoodData Central, McCance & Widdowson's CoFID, ANSES Ciqual, DTU Frida, AUSNUT and Open Food Facts — into a single schema, so a caller can query nutrients across sources without reconciling each publisher's format. Endpoints cover food search, a full nutrient panel per food, a nutrient catalogue, reverse nutrient search for the richest and poorest reference foods, and recipe parsing and analysis that resolves raw ingredient lines into per-line nutrition. Authentication is an X-Api-Key header, with a free tier of 10 requests a minute and 100 a day. HTTPS only and CORS disabled, so it is built for server-to-server use. The underlying dataset carries a citable Zenodo DOI, which is unusual provenance for a commercial data API.
 
-- **Developer:** https://food-info.org/developer
-- **OpenAPI:** https://api.food-info.org/api/v1/openapi.json
-- **Data sources:** https://food-info.org/data-sources
-- **Dataset DOI:** https://doi.org/10.5281/zenodo.21527348
-- **llms.txt:** https://food-info.org/llms.txt
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/food-info/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/food-info/refs/heads/main/apis.yml)
 
-Part of the [API Evangelist](https://apievangelist.com) network. Profiled 2026-08-04 from
-[api-search/inbox#2](https://github.com/api-search/inbox/issues/2); every claim was fetched
-first — see `X-Discovery` in `apis.yml`.
+## Scope
 
-## What it does
+- **Type:** Index
+- **Position:** Producing
+- **Access:** 3rd-Party
 
-Merges six food-composition datasets — **USDA FoodData Central**, **McCance & Widdowson's CoFID**,
-**ANSES Ciqual**, **DTU Frida**, **AUSNUT** and **Open Food Facts** — into one schema, so a caller
-queries nutrients across sources without reconciling each publisher's format.
+## Tags
 
-Eight operations: nutrient catalogue, food search, food lookup, full nutrient panel, reverse
-nutrient search (top and bottom foods), plus recipe parsing and per-line recipe analysis.
+- Nutrition
+- Food
+- Food Composition
+- Nutrients
+- Data
+- Open Data
+- Dietetics
+- Recipes
+- Health
+- Research
 
-`X-Api-Key` header. Free tier of 10 requests a minute and 100 a day. HTTPS only, CORS disabled —
-built for server-to-server use.
+## Timestamps
 
-## Notes
+- **Created:** 2026-08-04
+- **Modified:** 2026-08-04
 
-**The dataset carries a citable Zenodo DOI**, which is unusual provenance for a commercial data
-API and is recorded as a conformance artifact rather than buried in prose.
+## APIs
 
-**They have an llms.txt they did not know about** — the submission stated none was published, but
-`https://food-info.org/llms.txt` serves 8,462 bytes.
+### Food Info API V1 API
 
-**0 of 8 operations carry an `operationId`.** Every one has a summary, so the spec is otherwise
-well formed; adding operation ids is the cheapest improvement available and is what SDK
-generators, MCP tool names and agent tool-calling key off.
+The ApiV1 API from Food Info — 6 operation(s) for apiv1.
+
+- **Human URL:** [https://food-info.org/developer](https://food-info.org/developer)
+- **Base URL:** `https://api.food-info.org`
+
+#### Tags
+
+- ApiV1
+
+#### Properties
+
+- [OpenAPI](openapi/food-info-apiv1-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/food-info-apiv1-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/food-info-apiv1-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [X- Open A P I- Source](https://api.food-info.org/api/v1/openapi.json)
+- [Documentation](https://food-info.org/developer)
+- [Authentication](authentication/food-info-authentication.yml)
+- [Plans](plans/food-info-plans.yml)
+- [Conformance](conformance/food-info-data-provenance.yml)
+- [X- Data Sources](https://food-info.org/data-sources)
+- [X- Dataset D O I](https://doi.org/10.5281/zenodo.21527348)
+- [Terms of Service](https://food-info.org/terms-conditions)
+- [Privacy Policy](https://food-info.org/privacy-policy)
+- [Llms Text](https://food-info.org/llms.txt)
+- [Examples](examples/food-info-examples.yml)
+- [Rate Limits](rate-limits/food-info-rate-limits.yml)
+- [Error Catalog](errors/food-info-problem-types.yml)
+- [Conventions](conventions/food-info-conventions.yml)
+- [Data Model](data-model/food-info-data-model.yml)
+- [Tool Crosswalk](mcp/food-info-tool-crosswalk.yml)
+
+### Food Info Recipes API API
+
+The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
+
+- **Human URL:** [https://food-info.org/developer](https://food-info.org/developer)
+- **Base URL:** `https://api.food-info.org`
+
+#### Tags
+
+- RecipesApi
+
+#### Properties
+
+- [OpenAPI](openapi/food-info-recipesapi-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/food-info-recipesapi-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/food-info-recipesapi-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [X- Open A P I- Source](https://api.food-info.org/api/v1/openapi.json)
+- [Documentation](https://food-info.org/developer)
+- [Authentication](authentication/food-info-authentication.yml)
+- [Plans](plans/food-info-plans.yml)
+- [Conformance](conformance/food-info-data-provenance.yml)
+- [X- Data Sources](https://food-info.org/data-sources)
+- [X- Dataset D O I](https://doi.org/10.5281/zenodo.21527348)
+- [Terms of Service](https://food-info.org/terms-conditions)
+- [Privacy Policy](https://food-info.org/privacy-policy)
+- [Llms Text](https://food-info.org/llms.txt)
+- [Examples](examples/food-info-examples.yml)
+- [Rate Limits](rate-limits/food-info-rate-limits.yml)
+- [Error Catalog](errors/food-info-problem-types.yml)
+- [Conventions](conventions/food-info-conventions.yml)
+- [Data Model](data-model/food-info-data-model.yml)
+- [Tool Crosswalk](mcp/food-info-tool-crosswalk.yml)
+
+## Common Properties
+
+- [Agentic Access](agentic-access/food-info-agentic-access.yml)
+- [Domain Security](security/food-info-domain-security.yml)
+- [Website](https://food-info.org)
+- [Documentation](https://food-info.org/developer)
+- [Terms of Service](https://food-info.org/terms-conditions)
+- [Privacy Policy](https://food-info.org/privacy-policy)
+- [Llms Text](https://food-info.org/llms.txt)
+- [Authentication](authentication/food-info-authentication.yml)
+- [Plans](plans/food-info-plans.yml)
+- [Conformance](conformance/food-info-data-provenance.yml)
+- [Conformance](conformance/food-info-conformance.yml)
+- [Developer Portal](https://food-info.org/developer)
+- [Support](https://food-info.org/contact)
+- [Well Known](well-known/food-info-well-known.yml)
+- [Security Txt](well-known/food-info-security.txt)
+- [Vulnerability Disclosure](security/food-info-vulnerability-disclosure.yml)
+- [Security](https://food-info.org/.well-known/security.txt)
+- [Rate Limits](rate-limits/food-info-rate-limits.yml)
+- [Error Catalog](errors/food-info-problem-types.yml)
+- [Conventions](conventions/food-info-conventions.yml)
+- [Lifecycle](lifecycle/food-info-lifecycle.yml)
+- [Data Model](data-model/food-info-data-model.yml)
+- [M C P Server](mcp/food-info-mcp.yml)
+- [Tool Crosswalk](mcp/food-info-tool-crosswalk.yml)
+- [Agent Skill](skills/_index.yml)
+- [Overlay](overlays/food-info-overlay.yaml)
+- [Examples](examples/food-info-examples.yml)
+- [L L Ms Txt](llms/food-info-llms.txt)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com

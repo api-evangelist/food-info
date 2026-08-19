@@ -1,0 +1,74 @@
+generated: '2026-08-04'
+method: derived
+status: candidate
+source: openapi/food-info-openapi.json
+description: CANDIDATE MCP tool surface derived from the eight operations in the published OpenAPI. Food
+  Info does NOT operate an MCP server — this is an API Evangelist proposal showing what one would look
+  like, not a provider claim. Every tool below maps 1:1 to a real operationId and inherits that operation's
+  parameters as its input schema.
+verified: '2026-08-04'
+server:
+  name: food-info
+  transport: http
+  url: null
+  operated_by: null
+probe:
+  date: '2026-08-04'
+  targets:
+  - url: https://api.food-info.org/mcp
+    status: 403
+    note: Cloudflare managed challenge on every non-API path of this host; no MCP endpoint advertised.
+  - url: https://food-info.org/llms.txt
+    status: 200
+    note: The provider's own site index lists tools, guides, studies and the developer API — and no MCP
+      server. Treated as authoritative that none is published.
+  registries_checked:
+  - npm @modelcontextprotocol
+  - modelcontextprotocol servers list
+  - mcp registry
+  result: none
+suitability:
+  note: 'This API is an unusually clean MCP fit: read-only, no side effects, integer-id addressing, an
+    idempotent surface, and operationIds the provider deliberately named for how they read as a tool call.
+    The only auth is a single header key, so a server-side MCP wrapper needs no OAuth dance.'
+tools:
+- name: list_nutrients
+  description: List the nutrient catalogue (id, name, unit, category) to discover nutrientId values.
+  source_operation: openapi/food-info-openapi.json#listNutrients
+  read_only: true
+- name: search_foods
+  description: Search reference foods by name (case-insensitive substring), optionally region-weighted.
+  source_operation: openapi/food-info-openapi.json#searchFoods
+  read_only: true
+- name: get_food
+  description: Look up a single food by FoodData Central id.
+  source_operation: openapi/food-info-openapi.json#getFood
+  read_only: true
+- name: get_food_nutrient_panel
+  description: Full nutrient panel for a food — per-100 g and per-serving amounts plus % reference intake.
+  source_operation: openapi/food-info-openapi.json#getFoodNutrientPanel
+  read_only: true
+- name: list_top_foods_by_nutrient
+  description: Reverse nutrient search — reference foods richest in a nutrient, per 100 g.
+  source_operation: openapi/food-info-openapi.json#listTopFoodsByNutrient
+  read_only: true
+- name: list_bottom_foods_by_nutrient
+  description: Reverse nutrient search — reference foods lowest in a nutrient, per 100 g.
+  source_operation: openapi/food-info-openapi.json#listBottomFoodsByNutrient
+  read_only: true
+- name: parse_recipe_ingredients
+  description: Parse raw ingredient lines into structured quantity/unit/food. No catalogue match.
+  source_operation: openapi/food-info-openapi.json#parseRecipeIngredients
+  read_only: true
+- name: analyze_recipe_nutrition
+  description: Analyse a recipe — per-line resolution, per-serving and per-100 g nutrition, source attribution
+    and review flags.
+  source_operation: openapi/food-info-openapi.json#analyzeRecipeNutrition
+  read_only: true
+crosswalk: mcp/food-info-tool-crosswalk.yml
+deployment:
+  mode: none
+  verified: derived
+  tools: 8
+  checked: '2026-08-12'
+  source: catalog MCP census

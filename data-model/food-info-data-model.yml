@@ -1,0 +1,159 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+description: >-
+  Entity-relationship graph derived from the 24 component schemas in the published OpenAPI. Two
+  domains: the reference-food catalogue (food, nutrient, panel) and the recipe calculator (parsed
+  ingredient, analysis). Nothing in this API is a stored, mutable resource — every entity is a
+  projection of the harmonised dataset or a computed result.
+verified: '2026-08-04'
+domains:
+- name: catalogue
+  description: The harmonised reference-food and nutrient catalogue.
+  entities: [FoodSummaryDto, FoodSearchResultDto, FoodPanelDto, NutrientDto, NutrientGroupDto,
+    NutrientRowDto, PanelServingDto, RelatedFoodDto, InflammationDto]
+- name: reverse-search
+  description: Nutrient-first ranking across the catalogue.
+  entities: [TopByNutrientDto, NutrientRefDto, NutrientRankingDto]
+- name: recipes
+  description: Ingredient parsing and per-recipe nutrition analysis. Computed, not stored.
+  entities: [ParsedIngredient, IngredientResult, RecipeAnalysis, NutritionFacts, RecipeNutrientGroup,
+    RecipeNutrientRow, RecipeParseRequest, RecipeAnalysisRequest]
+identifiers:
+- entity: food
+  key: id
+  type: integer
+  domain: USDA FoodData Central id
+  used_by: [getFood, getFoodNutrientPanel]
+- entity: nutrient
+  key: nutrientId
+  type: integer
+  domain: Food Info nutrient catalogue (discoverable via listNutrients)
+  used_by: [listTopFoodsByNutrient, listBottomFoodsByNutrient]
+- entity: serving
+  key: portionId
+  type: integer
+  domain: per-food serving id from FoodPanelDto.availableServings
+  used_by: [getFoodNutrientPanel]
+entities:
+- name: FoodPanelDto
+  description: Full nutrient panel for one food — the richest entity in the model.
+  produced_by: [getFoodNutrientPanel]
+  relationships:
+  - to: DataType
+    kind: has_one
+    via: dataType
+  - to: FoodSource
+    kind: has_one
+    via: source
+  - to: InflammationDto
+    kind: has_one
+    via: inflammation
+  - to: PanelServingDto
+    kind: has_one
+    via: serving
+  - to: PanelServingDto
+    kind: has_many
+    via: availableServings
+  - to: NutrientGroupDto
+    kind: has_many
+    via: groups
+  - to: RelatedFoodDto
+    kind: has_many
+    via: relatedFoods
+- name: FoodSummaryDto
+  description: Single-food lookup result.
+  produced_by: [getFood]
+  relationships:
+  - to: DataType
+    kind: has_one
+    via: dataType
+- name: FoodSearchResultDto
+  description: Search hit for a food.
+  produced_by: [searchFoods]
+  relationships: []
+- name: NutrientGroupDto
+  description: A titled group of nutrient rows inside a panel (macros, vitamins, minerals).
+  relationships:
+  - to: NutrientRowDto
+    kind: has_many
+    via: rows
+- name: NutrientDto
+  description: Catalogue entry for a nutrient — id, name, unit, category.
+  produced_by: [listNutrients]
+  relationships: []
+- name: TopByNutrientDto
+  description: Reverse-search result set for one nutrient.
+  produced_by: [listTopFoodsByNutrient, listBottomFoodsByNutrient]
+  relationships:
+  - to: NutrientRefDto
+    kind: has_one
+    via: nutrient
+  - to: NutrientRankingDto
+    kind: has_many
+    via: results
+- name: ParsedIngredient
+  description: One structured ingredient line — quantity, unit, food text. No catalogue match.
+  produced_by: [parseRecipeIngredients]
+  relationships:
+  - to: UnitKind
+    kind: has_one
+    via: unitKind
+- name: RecipeAnalysis
+  description: Full recipe result — per-line resolution plus per-serving and per-100 g nutrition.
+  produced_by: [analyzeRecipeNutrition]
+  relationships:
+  - to: IngredientResult
+    kind: has_many
+    via: ingredients
+  - to: NutritionFacts
+    kind: has_one
+    via: perServing
+  - to: NutritionFacts
+    kind: has_one
+    via: per100g
+  - to: RecipeNutrientGroup
+    kind: has_many
+    via: nutrientGroups
+- name: RecipeNutrientGroup
+  relationships:
+  - to: RecipeNutrientRow
+    kind: has_many
+    via: rows
+enumerations:
+- name: FoodSource
+  values: [Fdc, CofidUk, Ciqual, Frida, Ausnut, OpenFoodFacts, Cnf, Fineli]
+  note: >-
+    The spec enumerates eight source datasets — two more (Cnf, the Canadian Nutrient File, and
+    Fineli, Finland) than the six the marketing surface names.
+- name: DataType
+  values: [SrLegacy, Foundation, Branded, SurveyFndds, Sample, AgriculturalAcquisition,
+    MarketAcquisition, SubSample, Experimental, Other, CofidUk, Ciqual, Frida, Ausnut,
+    OpenFoodFacts, Cnf, Fineli]
+  note: USDA FoodData Central data types, extended with one member per non-USDA source dataset.
+- name: UnitKind
+  values: [None, Mass, Volume, Count, Vague]
+  note: How a parsed recipe quantity was classified — "Vague" flags an unmeasurable line.
+cross_domain_link:
+  description: >-
+    The recipe domain resolves each ingredient line against the catalogue domain at request time.
+    IngredientResult carries an id-reference (`foodId`) plus `matchedDescription`, `source`,
+    `confidence` and `needsReview`, so a computed recipe row can be traced back to the reference food
+    it was priced against and re-fetched with getFoodNutrientPanel.
+  relationships:
+  - from: IngredientResult
+    to: FoodSummaryDto
+    kind: belongs_to
+    via: foodId
+    binding: id-reference
+    confidence: high
+  - from: NutrientRankingDto
+    to: FoodSummaryDto
+    kind: belongs_to
+    via: foodId
+    binding: id-reference
+    confidence: high
+gaps:
+- The cross-domain joins above are id-reference only — no `$ref` links IngredientResult or
+  NutrientRankingDto to the food schemas, so the join is discoverable by field name rather than
+  from the schema graph.

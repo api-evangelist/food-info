@@ -1,0 +1,141 @@
+generated: '2026-08-04'
+method: generated
+source: openapi/food-info-openapi.json
+description: >-
+  Runnable request examples for every operation in the Food Info API, generated from the parameter
+  and requestBody schemas in the provider's published OpenAPI. The spec ships no `example` or
+  `examples` members, so these fill that gap. Request shapes only — no response bodies are included,
+  because inventing nutrient values would misrepresent the dataset. Supply your own key via the
+  FOOD_INFO_API_KEY environment variable.
+verified: '2026-08-04'
+base_url: https://api.food-info.org
+auth_header: 'X-Api-Key: $FOOD_INFO_API_KEY'
+examples:
+- operationId: listNutrients
+  method: GET
+  path: /api/v1/nutrients
+  curl: |
+    curl -s https://api.food-info.org/api/v1/nutrients \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY"
+  returns: NutrientDto[] — { id, name, unit, category, rank, hasRda }
+- operationId: searchFoods
+  method: GET
+  path: /api/v1/foods/search
+  params: {q: cheddar cheese, home_nation: GB, limit: 10}
+  curl: |
+    curl -s -G https://api.food-info.org/api/v1/foods/search \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY" \
+      --data-urlencode "q=cheddar cheese" \
+      --data-urlencode "home_nation=GB" \
+      --data-urlencode "limit=10"
+  returns: FoodSearchResultDto[] — { id, description, ndbNumber }
+- operationId: getFood
+  method: GET
+  path: /api/v1/foods/{id}
+  params: {id: '<foodId from searchFoods>'}
+  curl: |
+    curl -s https://api.food-info.org/api/v1/foods/$FOOD_ID \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY"
+  returns: FoodSummaryDto
+- operationId: getFoodNutrientPanel
+  method: GET
+  path: /api/v1/foods/{id}/panel
+  params: {id: '<foodId>', source: UK RI}
+  curl: |
+    curl -s -G https://api.food-info.org/api/v1/foods/$FOOD_ID/panel \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY" \
+      --data-urlencode "source=UK RI"
+  variants:
+  - note: US Daily Values basis
+    query: source=FDA 2016
+  - note: A specific serving from availableServings
+    query: portionId=<portionId>
+  returns: FoodPanelDto — grouped per-100 g and per-serving rows plus % reference intake
+- operationId: listTopFoodsByNutrient
+  method: GET
+  path: /api/v1/nutrients/{nutrientId}/top-foods
+  params: {nutrientId: '<id from listNutrients>', limit: 25}
+  curl: |
+    curl -s -G https://api.food-info.org/api/v1/nutrients/$NUTRIENT_ID/top-foods \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY" \
+      --data-urlencode "limit=25"
+  returns: TopByNutrientDto — { nutrient, results[] { foodId, description, amount } }, per 100 g
+- operationId: listBottomFoodsByNutrient
+  method: GET
+  path: /api/v1/nutrients/{nutrientId}/bottom-foods
+  params: {nutrientId: '<id from listNutrients>', home_nation: GB}
+  curl: |
+    curl -s -G https://api.food-info.org/api/v1/nutrients/$NUTRIENT_ID/bottom-foods \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY" \
+      --data-urlencode "home_nation=GB"
+  returns: TopByNutrientDto, lowest amount first
+- operationId: parseRecipeIngredients
+  method: POST
+  path: /api/v1/recipes/parse
+  body:
+    lines:
+    - 2 large eggs
+    - 150 g plain flour
+    - a splash of olive oil
+  curl: |
+    curl -s https://api.food-info.org/api/v1/recipes/parse \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"lines":["2 large eggs","150 g plain flour","a splash of olive oil"]}'
+  returns: ParsedIngredient[] — structured quantity/unit/food, unitKind one of None|Mass|Volume|Count|Vague
+- operationId: analyzeRecipeNutrition
+  method: POST
+  path: /api/v1/recipes/analyze
+  body:
+    lines:
+    - 2 large eggs
+    - 150 g plain flour
+    - 200 ml whole milk
+    region: GB
+    servings: 4
+  curl: |
+    curl -s https://api.food-info.org/api/v1/recipes/analyze \
+      -H "X-Api-Key: $FOOD_INFO_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"lines":["2 large eggs","150 g plain flour","200 ml whole milk"],"region":"GB","servings":4}'
+  returns: >-
+    RecipeAnalysis — ingredients[] with foodId/source/confidence/needsReview, perServing, per100g,
+    nutrientGroups[]
+python: |
+  import os, requests
+
+  BASE = "https://api.food-info.org"
+  H = {"X-Api-Key": os.environ["FOOD_INFO_API_KEY"]}
+
+  # 1. resolve a food name to a catalogue id
+  hits = requests.get(f"{BASE}/api/v1/foods/search",
+                      params={"q": "cheddar cheese", "home_nation": "GB", "limit": 10},
+                      headers=H, timeout=30).json()
+  food_id = hits[0]["id"]
+
+  # 2. full nutrient panel on the UK reference-intake basis
+  panel = requests.get(f"{BASE}/api/v1/foods/{food_id}/panel",
+                       params={"source": "UK RI"}, headers=H, timeout=30).json()
+
+  for group in panel.get("groups", []):
+      for row in group.get("rows", []):
+          print(group.get("title"), row)
+javascript: |
+  const BASE = "https://api.food-info.org";
+  const headers = { "X-Api-Key": process.env.FOOD_INFO_API_KEY };
+
+  // reverse nutrient search: foods richest in a nutrient
+  const nutrients = await (await fetch(`${BASE}/api/v1/nutrients`, { headers })).json();
+  const iron = nutrients.find((n) => n.name.toLowerCase() === "iron");
+
+  const top = await (
+    await fetch(`${BASE}/api/v1/nutrients/${iron.id}/top-foods?limit=25`, { headers })
+  ).json();
+
+  console.log(top.nutrient, top.results.slice(0, 5)); // amounts are per 100 g
+notes:
+- Server-to-server only — CORS is disabled, so the browser examples above are Node/Deno, not browser
+  fetch.
+- No secret is embedded: every sample reads the key from the environment.
+- The free tier allows 10 requests a minute and 100 a day per account, so cache listNutrients rather
+  than re-fetching it.

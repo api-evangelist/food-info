@@ -1,0 +1,20 @@
+{
+  "provider": "food-info",
+  "sources": [
+    "food-info-apiv1-api-openapi.yml",
+    "food-info-recipesapi-api-openapi.yml"
+  ],
+  "outputs": [
+    "food-info-apiv1-api-openapi.yml",
+    "food-info-recipesapi-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "food-info-apiv1-api-openapi.yml: upgraded openapi 3.0.4 -> OpenAPI 3.2.0",
+    "food-info-recipesapi-api-openapi.yml: upgraded openapi 3.0.4 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

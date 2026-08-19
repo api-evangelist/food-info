@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Food Info Recipes API API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RecipesApi",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Parse raw ingredient lines into structured {quantity, unit, food, …}. No DB, no food match.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.food-info.org/api/v1/recipes/parse",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Parse raw ingredient lines into structured {quantity, unit, food, …}. No DB, no food match."
+        },
+        {
+          "info": {
+            "name": "Analyze a recipe → per-line resolution + per-serving/per-100 g nutrition + source attribution + review flags.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.food-info.org/api/v1/recipes/analyze",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Analyze a recipe → per-line resolution + per-serving/per-100 g nutrition + source attribution + review flags."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

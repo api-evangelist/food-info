@@ -1,0 +1,49 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+description: >-
+  Per-account request quotas, published verbatim in the OpenAPI `info.description`. Quotas are
+  counted per account rather than per key, and every response carries the tier and both ceilings as
+  headers. Two named tiers are documented: the free key and the Practitioner plan.
+verified: '2026-08-04'
+scope: account
+enforcement: per-account across all keys on the account
+rate_limits:
+- tier: Free
+  limit_count: 10
+  limit_period: minute
+  daily_limit: 100
+  note: Issued with a free account.
+- tier: Practitioner
+  limit_count: 60
+  limit_period: minute
+  daily_limit: 10000
+  note: Paid plan.
+headers:
+- name: X-RateLimit-Limit-Minute
+  description: The per-minute ceiling for the calling account's tier.
+- name: X-RateLimit-Limit-Day
+  description: The per-day ceiling for the calling account's tier.
+- name: X-RateLimit-Tier
+  description: The name of the tier the calling account is on.
+evidence:
+- source: openapi/food-info-openapi.json
+  field: info.description
+  quote: >-
+    A free account gets a key with 10 requests/minute and 100/day; the Practitioner plan raises that
+    to 60/minute and 10,000/day. Quotas are counted per account, not per key. Every response carries
+    X-RateLimit-Limit-Minute, X-RateLimit-Limit-Day and X-RateLimit-Tier.
+- source: https://food-info.org/developer
+  status: 403
+  note: >-
+    The developer page is behind a Cloudflare managed challenge and could not be read directly on
+    2026-08-04; the values above come from the provider's own machine-readable spec instead.
+gaps:
+- No documented `X-RateLimit-Remaining` or `X-RateLimit-Reset` header, so a client cannot see how
+  much of the window it has left — only the ceiling.
+- >-
+  No documented 429 response and no Retry-After header — the OpenAPI declares only 400/404 error
+  responses, so the over-quota behaviour is undescribed in the contract.
+related:
+- plans/food-info-plans.yml
+- conventions/food-info-conventions.yml

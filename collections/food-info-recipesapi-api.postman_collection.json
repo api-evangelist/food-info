@@ -1,0 +1,315 @@
+{
+  "item": [
+    {
+      "id": "1e669a4d-6f09-4249-97e9-4efb37fa2b30",
+      "name": "RecipesApi",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8edaaebb-35ac-4aec-bf49-71dad4417735",
+          "name": "Parse raw ingredient lines into structured {quantity, unit, food, …}. No DB, no food match.",
+          "request": {
+            "name": "Parse raw ingredient lines into structured {quantity, unit, food, …}. No DB, no food match.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "recipes",
+                "parse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lines\": \"<array,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ec58768b-52eb-4719-90af-c4f2fc1e8f2a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    "parse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lines\": \"<array,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"raw\": null,\n    \"quantity\": null,\n    \"quantityIsApproximate\": false,\n    \"unit\": \"string\",\n    \"unitKind\": \"Volume\",\n    \"parenGrams\": 6825.833279653206,\n    \"foodPhrase\": \"string\",\n    \"prep\": null,\n    \"confidence\": 5600.157086434675,\n    \"needsReview\": false\n  },\n  {\n    \"raw\": null,\n    \"quantity\": 8112.432122383554,\n    \"quantityIsApproximate\": false,\n    \"unit\": null,\n    \"unitKind\": \"Vague\",\n    \"parenGrams\": 4624.182864483024,\n    \"foodPhrase\": \"string\",\n    \"prep\": null,\n    \"confidence\": 9096.57484047005,\n    \"needsReview\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd382247-6a86-43f7-abc1-3ba6fcd176b9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    "parse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lines\": \"<array,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 2270,\n  \"detail\": \"string\",\n  \"instance\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9a844d9-d7a8-4848-94bc-8ba293eacc92",
+          "name": "Analyze a recipe → per-line resolution + per-serving/per-100 g nutrition + source attribution + review flags.",
+          "request": {
+            "name": "Analyze a recipe → per-line resolution + per-serving/per-100 g nutrition + source attribution + review flags.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "recipes",
+                "analyze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lines\": \"<array,null>\",\n  \"region\": \"<string,null>\",\n  \"servings\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "76e334ea-5dc6-4c58-9356-cbcbfa53dc02",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    "analyze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lines\": \"<array,null>\",\n  \"region\": \"<string,null>\",\n  \"servings\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ingredients\": [\n    \"\",\n    \"\"\n  ],\n  \"perServing\": {\n    \"energyKcal\": 5435.82275186404,\n    \"proteinG\": 1951.3449897287949,\n    \"fatG\": 1221.244940968408,\n    \"saturatedFatG\": 6822.922526286535,\n    \"carbohydrateG\": 947.3578597751175,\n    \"sugarsG\": 409.01853686112656,\n    \"fibreG\": 1392.878937243619,\n    \"sodiumMg\": 8025.7122993865705\n  },\n  \"per100g\": {\n    \"energyKcal\": 9965.956859262924,\n    \"proteinG\": 2776.0197759350635,\n    \"fatG\": 1894.105896090874,\n    \"saturatedFatG\": 1351.0436057890217,\n    \"carbohydrateG\": 4758.164471600126,\n    \"sugarsG\": 3861.740514808599,\n    \"fibreG\": 2563.868528477495,\n    \"sodiumMg\": 3673.54232241444\n  },\n  \"totalGrams\": 771.9334930654331,\n  \"servings\": 4592,\n  \"sources\": null,\n  \"reviewFlags\": null,\n  \"nutrientGroups\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aed4bad6-1e1a-4f5b-96ec-c83b9d49301b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    "analyze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lines\": \"<array,null>\",\n  \"region\": \"<string,null>\",\n  \"servings\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 2270,\n  \"detail\": \"string\",\n  \"instance\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.food-info.org",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "noauth"
+  },
+  "info": {
+    "_postman_id": "8425b6f9-ee06-4cea-a8fc-05acb9982146",
+    "name": "Food Info Recipes API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Nutrition data for millions of foods, merged from five national food-composition datasets: USDA FoodData Central (US), McCance & Widdowson's CoFID (UK), ANSES Ciqual (France), the Danish Food Composition Database, and FSANZ AUSNUT (Australia/NZ), plus Open Food Facts for branded products.\n\nAuthenticate with an API key in the `X-Api-Key` header. A free account gets a key with 10 requests/minute and 100/day; the Practitioner plan raises that to 60/minute and 10,000/day. Quotas are counted per account, not per key. Every response carries `X-RateLimit-Limit-Minute`, `X-RateLimit-Limit-Day` and `X-RateLimit-Tier`.\n\nServer-to-server only: CORS is not enabled, so keys stay off the browser.\n\nContact Support:\n Name: Food Info\n Email: info@food-info.org",
+      "type": "text/plain"
+    }
+  }
+}

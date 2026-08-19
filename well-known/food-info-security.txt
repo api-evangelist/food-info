@@ -1,0 +1,4 @@
+Contact: https://food-info.org/contact
+Expires: 2027-08-04T19:01:46.237Z
+Preferred-Languages: en
+Canonical: https://food-info.org/.well-known/security.txt

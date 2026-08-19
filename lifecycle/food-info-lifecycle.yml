@@ -1,0 +1,49 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/food-info-openapi.json
+description: >-
+  Versioning and lifecycle posture for the Food Info API, derived from the published OpenAPI plus
+  live probes. The API is on its first version; no deprecation policy, SLA or status page was found.
+verified: '2026-08-04'
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  spec_info_version: v1
+  policy_url: null
+  note: All eight operations sit under /api/v1; no second version is published.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  deprecation_header: unknown
+  note: No deprecation or sunset policy was found, and no operation in the spec is marked deprecated.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+changelog: null
+dataset_versioning:
+  doi: https://doi.org/10.5281/zenodo.21527348
+  note: >-
+    The underlying harmonised dataset is deposited on Zenodo with a citable DOI, which gives the
+    DATA a versioned, archived identity even though the API itself has no changelog. This is the
+    strongest lifecycle signal the provider publishes.
+  artifact: conformance/food-info-data-provenance.yml
+evidence:
+- source: openapi/food-info-openapi.json
+  note: uri-path versioning and info.version read from the spec
+- source: https://food-info.org/llms.txt
+  status: 200
+  note: >-
+    The first-party llms.txt indexes the whole public site and lists no changelog, status page,
+    roadmap or SLA page — this is the provider's own site index, so the absence is meaningful.
+- source: https://food-info.org/status
+  status: 403
+  note: Cloudflare managed challenge; existence could not be confirmed either way.
+- source: https://food-info.org/changelog
+  status: 403
+  note: Cloudflare managed challenge; existence could not be confirmed either way.
+gaps:
+- No status page, no changelog, no SLA and no deprecation policy — the operational-transparency
+  surface is the single largest gap for this provider.
