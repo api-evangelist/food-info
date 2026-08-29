@@ -12,8 +12,6 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "food-info-apiv1-api-openapi.yml: upgraded openapi 3.0.4 -> OpenAPI 3.2.0",
-    "food-info-recipesapi-api-openapi.yml: upgraded openapi 3.0.4 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
   "skipped": []

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Food Info Recipes API API
+  title: Food Info Recipes API
   description: 'Nutrition data for millions of foods, merged from five national food-composition datasets: USDA FoodData Central (US), McCance & Widdowson''s CoFID (UK), ANSES Ciqual (France), the Danish Food Composition Database, and FSANZ AUSNUT (Australia/NZ), plus Open Food Facts for branded products.
 
 
@@ -84,119 +84,6 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    ParsedIngredient:
-      required:
-      - raw
-      type: object
-      properties:
-        raw:
-          type:
-          - string
-          - 'null'
-          description: The original line, verbatim.
-        quantity:
-          type:
-          - number
-          - 'null'
-          description: Resolved amount (the midpoint for a range); null when the line states no quantity.
-          format: double
-        quantityIsApproximate:
-          type: boolean
-          description: True when the quantity is a range ("2-3"), a word ("a"), or otherwise inexact.
-        unit:
-          type:
-          - string
-          - 'null'
-          description: Canonical unit token (e.g. "tbsp", "g", "clove"); null when there is no unit.
-        unitKind:
-          $ref: '#/components/schemas/UnitKind'
-        parenGrams:
-          type:
-          - number
-          - 'null'
-          description: Authoritative gram weight lifted from a parenthetical ("(120 g)"); null if absent.
-          format: double
-        foodPhrase:
-          type:
-          - string
-          - 'null'
-          description: The food name text, cleaned of quantity/unit/parenthetical/leading "of".
-        prep:
-          type:
-          - string
-          - 'null'
-          description: Preparation/qualifier after the first comma ("sifted", "finely chopped"); null if none.
-        confidence:
-          type: number
-          description: Parse confidence in [0,1]. Calibrated later against the golden set.
-          format: double
-        needsReview:
-          type: boolean
-          description: True when the line should be flagged for human confirmation (and logged as a miss).
-      additionalProperties: false
-      description: 'The structured result of parsing one raw recipe ingredient line (recipe-engine P0 slice 2). Every
-
-        field the later stages need to resolve a food + a gram weight, plus a confidence and a
-
-        FoodInfo.App.Recipes.ParsedIngredient.NeedsReview flag. When the parser can''t confidently structure a line it still returns
-
-        a best-effort result with `NeedsReview = true` — the caller logs it to the resolution-miss
-
-        backlog and asks the blogger to confirm; there is no model fallback.'
-    RecipeAnalysisRequest:
-      type: object
-      properties:
-        lines:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        region:
-          type:
-          - string
-          - 'null'
-        servings:
-          type: integer
-          format: int32
-      additionalProperties: false
-      description: 'Analyze a recipe: raw ingredient lines + the blog''s home nation (region-weighting) + servings.'
-    RecipeParseRequest:
-      type: object
-      properties:
-        lines:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-      description: Body for `POST /api/v1/recipes/parse`.
     RecipeNutrientRow:
       type: object
       properties:
@@ -283,35 +170,60 @@ components:
             $ref: '#/components/schemas/RecipeNutrientRow'
       additionalProperties: false
       description: A category of nutrients (Proximates, Vitamins, Minerals…) for the full breakdown modal, ordered.
-    NutritionFacts:
+    RecipeParseRequest:
       type: object
       properties:
-        energyKcal:
-          type: number
-          format: double
-        proteinG:
-          type: number
-          format: double
-        fatG:
-          type: number
-          format: double
-        saturatedFatG:
-          type: number
-          format: double
-        carbohydrateG:
-          type: number
-          format: double
-        sugarsG:
-          type: number
-          format: double
-        fibreG:
-          type: number
-          format: double
-        sodiumMg:
-          type: number
-          format: double
+        lines:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       additionalProperties: false
-      description: The WPRM-shaped nutrition label (per serving or per 100 g). Sodium in mg; the rest in g / kcal.
+      description: Body for `POST /api/v1/recipes/parse`.
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    RecipeAnalysisRequest:
+      type: object
+      properties:
+        lines:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        region:
+          type:
+          - string
+          - 'null'
+        servings:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: 'Analyze a recipe: raw ingredient lines + the blog''s home nation (region-weighting) + servings.'
     UnitKind:
       enum:
       - None
@@ -365,6 +277,94 @@ components:
           description: Why it needs review / could not resolve, when applicable.
       additionalProperties: false
       description: 'The resolution of one ingredient line: what it parsed to, the food it matched, and the grams.'
+    NutritionFacts:
+      type: object
+      properties:
+        energyKcal:
+          type: number
+          format: double
+        proteinG:
+          type: number
+          format: double
+        fatG:
+          type: number
+          format: double
+        saturatedFatG:
+          type: number
+          format: double
+        carbohydrateG:
+          type: number
+          format: double
+        sugarsG:
+          type: number
+          format: double
+        fibreG:
+          type: number
+          format: double
+        sodiumMg:
+          type: number
+          format: double
+      additionalProperties: false
+      description: The WPRM-shaped nutrition label (per serving or per 100 g). Sodium in mg; the rest in g / kcal.
+    ParsedIngredient:
+      required:
+      - raw
+      type: object
+      properties:
+        raw:
+          type:
+          - string
+          - 'null'
+          description: The original line, verbatim.
+        quantity:
+          type:
+          - number
+          - 'null'
+          description: Resolved amount (the midpoint for a range); null when the line states no quantity.
+          format: double
+        quantityIsApproximate:
+          type: boolean
+          description: True when the quantity is a range ("2-3"), a word ("a"), or otherwise inexact.
+        unit:
+          type:
+          - string
+          - 'null'
+          description: Canonical unit token (e.g. "tbsp", "g", "clove"); null when there is no unit.
+        unitKind:
+          $ref: '#/components/schemas/UnitKind'
+        parenGrams:
+          type:
+          - number
+          - 'null'
+          description: Authoritative gram weight lifted from a parenthetical ("(120 g)"); null if absent.
+          format: double
+        foodPhrase:
+          type:
+          - string
+          - 'null'
+          description: The food name text, cleaned of quantity/unit/parenthetical/leading "of".
+        prep:
+          type:
+          - string
+          - 'null'
+          description: Preparation/qualifier after the first comma ("sifted", "finely chopped"); null if none.
+        confidence:
+          type: number
+          description: Parse confidence in [0,1]. Calibrated later against the golden set.
+          format: double
+        needsReview:
+          type: boolean
+          description: True when the line should be flagged for human confirmation (and logged as a miss).
+      additionalProperties: false
+      description: 'The structured result of parsing one raw recipe ingredient line (recipe-engine P0 slice 2). Every
+
+        field the later stages need to resolve a food + a gram weight, plus a confidence and a
+
+        FoodInfo.App.Recipes.ParsedIngredient.NeedsReview flag. When the parser can''t confidently structure a line it still returns
+
+        a best-effort result with `NeedsReview = true` — the caller logs it to the resolution-miss
+
+        backlog and asks the blogger to confirm; there is no model fallback.'
   securitySchemes:
     ApiKey:
       type: apiKey
