@@ -10,6 +10,18 @@ description: Food Info serves harmonised nutrient data for reference foods over 
   is an X-Api-Key header, with a free tier of 10 requests a minute and 100 a day. HTTPS only and CORS
   disabled, so it is built for server-to-server use. The underlying dataset carries a citable Zenodo DOI,
   which is unusual provenance for a commercial data API.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/food-info.png
 created: '2026-08-04'
 modified: '2026-08-04'
