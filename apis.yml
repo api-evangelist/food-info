@@ -37,7 +37,7 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/food-info.png
 created: '2026-08-04'
-modified: '2026-08-04'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 type: Index
 position: Producing
@@ -109,7 +109,7 @@ apis:
   - type: ToolCrosswalk
     url: mcp/food-info-tool-crosswalk.yml
 - aid: food-info:food-info-recipesapi-api
-  name: Food Info Recipes API API
+  name: Food Info Recipes API
   description: The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
   humanURL: https://food-info.org/developer
   baseURL: https://api.food-info.org
@@ -241,9 +241,9 @@ X-Discovery:
     url: https://food-info.org/.well-known/api-catalog
     http_status: 404
     real: false
-    note: No RFC 9727 api-catalog on either host. A re-probe on 2026-08-04 did find an RFC 9116
-      security.txt at https://food-info.org/.well-known/security.txt (200) and a Content-Signal
-      declaration in robots.txt; both are captured in well-known/.
+    note: No RFC 9727 api-catalog on either host. A re-probe on 2026-08-04 did find an RFC 9116 security.txt
+      at https://food-info.org/.well-known/security.txt (200) and a Content-Signal declaration in robots.txt;
+      both are captured in well-known/.
   - surface: Control
     url: https://food-info.org/zzz-control-nonsense
     http_status: 404
