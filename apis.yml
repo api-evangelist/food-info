@@ -66,16 +66,16 @@ tags_raw:
 - Health
 - Research
 apis:
-- aid: food-info:food-info-apiv1-api
-  name: Food Info API V1 API
-  description: The ApiV1 API from Food Info — 6 operation(s) for apiv1.
+- aid: food-info:food-info-recipesapi-api
+  name: Food Info Recipes API
+  description: The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
   humanURL: https://food-info.org/developer
   baseURL: https://api.food-info.org
   tags:
-  - ApiV1
+  - RecipesApi
   properties:
   - type: OpenAPI
-    url: openapi/food-info-apiv1-api-openapi.yml
+    url: openapi/food-info-recipesapi-api-openapi.yml
   - type: X-OpenAPI-Source
     url: https://api.food-info.org/api/v1/openapi.json
   - type: Documentation
@@ -108,16 +108,16 @@ apis:
     url: data-model/food-info-data-model.yml
   - type: ToolCrosswalk
     url: mcp/food-info-tool-crosswalk.yml
-- aid: food-info:food-info-recipesapi-api
-  name: Food Info Recipes API
-  description: The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
+- aid: food-info:food-info-api-v1-api
+  name: Food Info api v1 API
+  description: The api v1 API from Food Info — 6 operation(s) for api v1.
   humanURL: https://food-info.org/developer
   baseURL: https://api.food-info.org
   tags:
-  - RecipesApi
+  - api v1
   properties:
   - type: OpenAPI
-    url: openapi/food-info-recipesapi-api-openapi.yml
+    url: openapi/food-info-api-v1-api-openapi.yml
   - type: X-OpenAPI-Source
     url: https://api.food-info.org/api/v1/openapi.json
   - type: Documentation
