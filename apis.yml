@@ -114,6 +114,8 @@ apis:
   humanURL: https://food-info.org/developer
   baseURL: https://api.food-info.org
   tags:
+  - ApiV1
+  tags_raw:
   - api v1
   properties:
   - type: OpenAPI
