@@ -78,39 +78,6 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    RecipeAnalysisRequest:
-      type: object
-      properties:
-        lines:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        region:
-          type:
-          - string
-          - 'null'
-        servings:
-          type: integer
-          format: int32
-      additionalProperties: false
-      description: 'Analyze a recipe: raw ingredient lines + the blog''s home nation (region-weighting) + servings.'
-    RecipeNutrientGroup:
-      type: object
-      properties:
-        category:
-          type:
-          - string
-          - 'null'
-        rows:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RecipeNutrientRow'
-      additionalProperties: false
-      description: A category of nutrients (Proximates, Vitamins, Minerals…) for the full breakdown modal, ordered.
     ParsedIngredient:
       required:
       - raw
@@ -170,6 +137,63 @@ components:
         a best-effort result with `NeedsReview = true` — the caller logs it to the resolution-miss
 
         backlog and asks the blogger to confirm; there is no model fallback.'
+    RecipeAnalysisRequest:
+      type: object
+      properties:
+        lines:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        region:
+          type:
+          - string
+          - 'null'
+        servings:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: 'Analyze a recipe: raw ingredient lines + the blog''s home nation (region-weighting) + servings.'
+    RecipeAnalysis:
+      type: object
+      properties:
+        ingredients:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IngredientResult'
+        perServing:
+          $ref: '#/components/schemas/NutritionFacts'
+        per100g:
+          $ref: '#/components/schemas/NutritionFacts'
+        totalGrams:
+          type: number
+          format: double
+        servings:
+          type: integer
+          format: int32
+        sources:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        reviewFlags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        nutrientGroups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RecipeNutrientGroup'
+      additionalProperties: false
+      description: "Full recipe analysis: per-line results, per-serving + per-100 g nutrition, the source DBs used\n            (for attribution — required on every page), and any lines flagged for human confirmation."
     UnitKind:
       enum:
       - None
@@ -179,35 +203,6 @@ components:
       - Vague
       type: string
       description: How a parsed unit converts to grams downstream (recipe-engine Stage 4, mass-resolve).
-    NutritionFacts:
-      type: object
-      properties:
-        energyKcal:
-          type: number
-          format: double
-        proteinG:
-          type: number
-          format: double
-        fatG:
-          type: number
-          format: double
-        saturatedFatG:
-          type: number
-          format: double
-        carbohydrateG:
-          type: number
-          format: double
-        sugarsG:
-          type: number
-          format: double
-        fibreG:
-          type: number
-          format: double
-        sodiumMg:
-          type: number
-          format: double
-      additionalProperties: false
-      description: The WPRM-shaped nutrition label (per serving or per 100 g). Sodium in mg; the rest in g / kcal.
     RecipeNutrientRow:
       type: object
       properties:
@@ -265,6 +260,50 @@ components:
           - string
           - 'null'
       additionalProperties: {}
+    NutritionFacts:
+      type: object
+      properties:
+        energyKcal:
+          type: number
+          format: double
+        proteinG:
+          type: number
+          format: double
+        fatG:
+          type: number
+          format: double
+        saturatedFatG:
+          type: number
+          format: double
+        carbohydrateG:
+          type: number
+          format: double
+        sugarsG:
+          type: number
+          format: double
+        fibreG:
+          type: number
+          format: double
+        sodiumMg:
+          type: number
+          format: double
+      additionalProperties: false
+      description: The WPRM-shaped nutrition label (per serving or per 100 g). Sodium in mg; the rest in g / kcal.
+    RecipeNutrientGroup:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+        rows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RecipeNutrientRow'
+      additionalProperties: false
+      description: A category of nutrients (Proximates, Vitamins, Minerals…) for the full breakdown modal, ordered.
     IngredientResult:
       required:
       - raw
@@ -320,45 +359,6 @@ components:
             type: string
       additionalProperties: false
       description: Body for `POST /api/v1/recipes/parse`.
-    RecipeAnalysis:
-      type: object
-      properties:
-        ingredients:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IngredientResult'
-        perServing:
-          $ref: '#/components/schemas/NutritionFacts'
-        per100g:
-          $ref: '#/components/schemas/NutritionFacts'
-        totalGrams:
-          type: number
-          format: double
-        servings:
-          type: integer
-          format: int32
-        sources:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        reviewFlags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        nutrientGroups:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RecipeNutrientGroup'
-      additionalProperties: false
-      description: "Full recipe analysis: per-line results, per-serving + per-100 g nutrition, the source DBs used\n            (for attribution — required on every page), and any lines flagged for human confirmation."
   securitySchemes:
     ApiKey:
       type: apiKey
