@@ -78,6 +78,132 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
+    RecipeAnalysis:
+      type: object
+      properties:
+        ingredients:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IngredientResult'
+        perServing:
+          $ref: '#/components/schemas/NutritionFacts'
+        per100g:
+          $ref: '#/components/schemas/NutritionFacts'
+        totalGrams:
+          type: number
+          format: double
+        servings:
+          type: integer
+          format: int32
+        sources:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        reviewFlags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        nutrientGroups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RecipeNutrientGroup'
+      additionalProperties: false
+      description: "Full recipe analysis: per-line results, per-serving + per-100 g nutrition, the source DBs used\n            (for attribution — required on every page), and any lines flagged for human confirmation."
+    IngredientResult:
+      required:
+      - raw
+      type: object
+      properties:
+        raw:
+          type:
+          - string
+          - 'null'
+        foodPhrase:
+          type:
+          - string
+          - 'null'
+        foodId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        matchedDescription:
+          type:
+          - string
+          - 'null'
+        source:
+          type:
+          - string
+          - 'null'
+          description: Attribution display name of the matched food's source DB (e.g. "The Danish Food Composition Database").
+        grams:
+          type:
+          - number
+          - 'null'
+          format: double
+        confidence:
+          type: number
+          format: double
+        needsReview:
+          type: boolean
+        note:
+          type:
+          - string
+          - 'null'
+          description: Why it needs review / could not resolve, when applicable.
+      additionalProperties: false
+      description: 'The resolution of one ingredient line: what it parsed to, the food it matched, and the grams.'
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    RecipeAnalysisRequest:
+      type: object
+      properties:
+        lines:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        region:
+          type:
+          - string
+          - 'null'
+        servings:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: 'Analyze a recipe: raw ingredient lines + the blog''s home nation (region-weighting) + servings.'
     ParsedIngredient:
       required:
       - raw
@@ -137,7 +263,36 @@ components:
         a best-effort result with `NeedsReview = true` — the caller logs it to the resolution-miss
 
         backlog and asks the blogger to confirm; there is no model fallback.'
-    RecipeAnalysisRequest:
+    NutritionFacts:
+      type: object
+      properties:
+        energyKcal:
+          type: number
+          format: double
+        proteinG:
+          type: number
+          format: double
+        fatG:
+          type: number
+          format: double
+        saturatedFatG:
+          type: number
+          format: double
+        carbohydrateG:
+          type: number
+          format: double
+        sugarsG:
+          type: number
+          format: double
+        fibreG:
+          type: number
+          format: double
+        sodiumMg:
+          type: number
+          format: double
+      additionalProperties: false
+      description: The WPRM-shaped nutrition label (per serving or per 100 g). Sodium in mg; the rest in g / kcal.
+    RecipeParseRequest:
       type: object
       properties:
         lines:
@@ -146,63 +301,8 @@ components:
           - 'null'
           items:
             type: string
-        region:
-          type:
-          - string
-          - 'null'
-        servings:
-          type: integer
-          format: int32
       additionalProperties: false
-      description: 'Analyze a recipe: raw ingredient lines + the blog''s home nation (region-weighting) + servings.'
-    RecipeAnalysis:
-      type: object
-      properties:
-        ingredients:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IngredientResult'
-        perServing:
-          $ref: '#/components/schemas/NutritionFacts'
-        per100g:
-          $ref: '#/components/schemas/NutritionFacts'
-        totalGrams:
-          type: number
-          format: double
-        servings:
-          type: integer
-          format: int32
-        sources:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        reviewFlags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        nutrientGroups:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RecipeNutrientGroup'
-      additionalProperties: false
-      description: "Full recipe analysis: per-line results, per-serving + per-100 g nutrition, the source DBs used\n            (for attribution — required on every page), and any lines flagged for human confirmation."
-    UnitKind:
-      enum:
-      - None
-      - Mass
-      - Volume
-      - Count
-      - Vague
-      type: string
-      description: How a parsed unit converts to grams downstream (recipe-engine Stage 4, mass-resolve).
+      description: Body for `POST /api/v1/recipes/parse`.
     RecipeNutrientRow:
       type: object
       properties:
@@ -235,60 +335,15 @@ components:
           format: double
       additionalProperties: false
       description: "One nutrient in the full breakdown: per-serving + per-100 g amounts in the nutrient's own unit,\n            plus the per-serving %DV + daily reference (drives the coloured bars, same as the food pages)."
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    NutritionFacts:
-      type: object
-      properties:
-        energyKcal:
-          type: number
-          format: double
-        proteinG:
-          type: number
-          format: double
-        fatG:
-          type: number
-          format: double
-        saturatedFatG:
-          type: number
-          format: double
-        carbohydrateG:
-          type: number
-          format: double
-        sugarsG:
-          type: number
-          format: double
-        fibreG:
-          type: number
-          format: double
-        sodiumMg:
-          type: number
-          format: double
-      additionalProperties: false
-      description: The WPRM-shaped nutrition label (per serving or per 100 g). Sodium in mg; the rest in g / kcal.
+    UnitKind:
+      enum:
+      - None
+      - Mass
+      - Volume
+      - Count
+      - Vague
+      type: string
+      description: How a parsed unit converts to grams downstream (recipe-engine Stage 4, mass-resolve).
     RecipeNutrientGroup:
       type: object
       properties:
@@ -304,61 +359,6 @@ components:
             $ref: '#/components/schemas/RecipeNutrientRow'
       additionalProperties: false
       description: A category of nutrients (Proximates, Vitamins, Minerals…) for the full breakdown modal, ordered.
-    IngredientResult:
-      required:
-      - raw
-      type: object
-      properties:
-        raw:
-          type:
-          - string
-          - 'null'
-        foodPhrase:
-          type:
-          - string
-          - 'null'
-        foodId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        matchedDescription:
-          type:
-          - string
-          - 'null'
-        source:
-          type:
-          - string
-          - 'null'
-          description: Attribution display name of the matched food's source DB (e.g. "The Danish Food Composition Database").
-        grams:
-          type:
-          - number
-          - 'null'
-          format: double
-        confidence:
-          type: number
-          format: double
-        needsReview:
-          type: boolean
-        note:
-          type:
-          - string
-          - 'null'
-          description: Why it needs review / could not resolve, when applicable.
-      additionalProperties: false
-      description: 'The resolution of one ingredient line: what it parsed to, the food it matched, and the grams.'
-    RecipeParseRequest:
-      type: object
-      properties:
-        lines:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-      description: Body for `POST /api/v1/recipes/parse`.
   securitySchemes:
     ApiKey:
       type: apiKey
