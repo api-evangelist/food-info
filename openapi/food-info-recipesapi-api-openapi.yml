@@ -365,3 +365,9 @@ components:
       description: Developer API key. Create one at https://food-info.org/developer
       name: X-Api-Key
       in: header
+x-provenance:
+  method: harvested
+  publisher: Food Info
+  source: https://api.food-info.org/api/v1/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
