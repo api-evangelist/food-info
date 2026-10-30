@@ -1,4 +1,4 @@
-# Food Info (food-info)
+# Food Info
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,132 +66,126 @@
 
 Food Info serves harmonised nutrient data for reference foods over a versioned REST API. It merges six food-composition datasets — USDA FoodData Central, McCance & Widdowson's CoFID, ANSES Ciqual, DTU Frida, AUSNUT and Open Food Facts — into a single schema, so a caller can query nutrients across sources without reconciling each publisher's format. Endpoints cover food search, a full nutrient panel per food, a nutrient catalogue, reverse nutrient search for the richest and poorest reference foods, and recipe parsing and analysis that resolves raw ingredient lines into per-line nutrition. Authentication is an X-Api-Key header, with a free tier of 10 requests a minute and 100 a day. HTTPS only and CORS disabled, so it is built for server-to-server use. The underlying dataset carries a citable Zenodo DOI, which is unusual provenance for a commercial data API.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/food-info/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/food-info/refs/heads/main/apis.yml)
+**Areas:** Nutrition · Food · food-composition · Nutrients · Data · Open Data · Dietetics · Recipes · Health · Research
 
-## Scope
+## Food Info on APIs.io
 
-- **Type:** Index
-- **Position:** Producing
-- **Access:** 3rd-Party
+Everything profiled for Food Info is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/food-info/](https://apis.io/providers/food-info/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (2)
 
-- Nutrition
-- Food
-- Food Composition
-- Nutrients
-- Data
-- Open Data
-- Dietetics
-- Recipes
-- Health
-- Research
+- [Food Info Recipes API](https://apis.io/apis/food-info/food-info-recipesapi-api/) — The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
+- [Food Info api v1 API](https://apis.io/apis/food-info/food-info-api-v1-api/) — The api v1 API from Food Info — 6 operation(s) for api v1.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-08-04
-- **Modified:** 2026-08-04
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Food Info API V1 API
+Model Context Protocol servers that expose the API to agents.
 
-The ApiV1 API from Food Info — 6 operation(s) for apiv1.
+- [food-info](https://apis.io/servers/food-info/food-info/)
 
-- **Human URL:** [https://food-info.org/developer](https://food-info.org/developer)
-- **Base URL:** `https://api.food-info.org`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- ApiV1
+- [Food Info Agentic Access](https://apis.io/agentic-access/food-info/food-info-agentic-access/)
 
-#### Properties
+#### Collections (2)
 
-- [OpenAPI](openapi/food-info-apiv1-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/food-info-apiv1-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/food-info-apiv1-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://api.food-info.org/api/v1/openapi.json)
-- [Documentation](https://food-info.org/developer)
-- [Authentication](authentication/food-info-authentication.yml)
-- [Plans](plans/food-info-plans.yml)
-- [Conformance](conformance/food-info-data-provenance.yml)
-- [X- Data Sources](https://food-info.org/data-sources)
-- [X- Dataset D O I](https://doi.org/10.5281/zenodo.21527348)
-- [Terms of Service](https://food-info.org/terms-conditions)
-- [Privacy Policy](https://food-info.org/privacy-policy)
-- [Llms Text](https://food-info.org/llms.txt)
-- [Examples](examples/food-info-examples.yml)
-- [Rate Limits](rate-limits/food-info-rate-limits.yml)
-- [Error Catalog](errors/food-info-problem-types.yml)
-- [Conventions](conventions/food-info-conventions.yml)
-- [Data Model](data-model/food-info-data-model.yml)
-- [Tool Crosswalk](mcp/food-info-tool-crosswalk.yml)
+Postman and Open Collection request collections.
 
-### Food Info Recipes API API
+- [Food Info API V1 API](https://apis.io/collections/food-info/open-food-info-apiv1-api/)
+- [Food Info Recipes API API](https://apis.io/collections/food-info/open-food-info-recipesapi-api/)
 
-The RecipesApi API from Food Info — 2 operation(s) for recipesapi.
+#### Overlays (1)
 
-- **Human URL:** [https://food-info.org/developer](https://food-info.org/developer)
-- **Base URL:** `https://api.food-info.org`
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Tags
+- [Food Info Overlay](https://apis.io/overlays/food-info/food-info-overlay/)
 
-- RecipesApi
+#### Security (3)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [OpenAPI](openapi/food-info-recipesapi-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/food-info-recipesapi-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/food-info-recipesapi-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://api.food-info.org/api/v1/openapi.json)
-- [Documentation](https://food-info.org/developer)
-- [Authentication](authentication/food-info-authentication.yml)
-- [Plans](plans/food-info-plans.yml)
-- [Conformance](conformance/food-info-data-provenance.yml)
-- [X- Data Sources](https://food-info.org/data-sources)
-- [X- Dataset D O I](https://doi.org/10.5281/zenodo.21527348)
-- [Terms of Service](https://food-info.org/terms-conditions)
-- [Privacy Policy](https://food-info.org/privacy-policy)
-- [Llms Text](https://food-info.org/llms.txt)
-- [Examples](examples/food-info-examples.yml)
-- [Rate Limits](rate-limits/food-info-rate-limits.yml)
-- [Error Catalog](errors/food-info-problem-types.yml)
-- [Conventions](conventions/food-info-conventions.yml)
-- [Data Model](data-model/food-info-data-model.yml)
-- [Tool Crosswalk](mcp/food-info-tool-crosswalk.yml)
+- [Food Info Authentication](https://apis.io/security/food-info/food-info-authentication/)
+- [Food Info Domain Security](https://apis.io/security/food-info/food-info-domain-security/)
+- [Food Info Vulnerability Disclosure](https://apis.io/security/food-info/food-info-vulnerability-disclosure/)
 
-## Common Properties
+#### Plans and pricing (1)
 
-- [Agentic Access](agentic-access/food-info-agentic-access.yml)
-- [Domain Security](security/food-info-domain-security.yml)
+Published plans, tiers and prices.
+
+- [Food Info Plans](https://apis.io/plans/food-info/food-info-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Food Info Rate Limits](https://apis.io/rate-limits/food-info/food-info-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://food-info.org)
 - [Documentation](https://food-info.org/developer)
-- [Terms of Service](https://food-info.org/terms-conditions)
-- [Privacy Policy](https://food-info.org/privacy-policy)
-- [Llms Text](https://food-info.org/llms.txt)
-- [Authentication](authentication/food-info-authentication.yml)
-- [Plans](plans/food-info-plans.yml)
-- [Conformance](conformance/food-info-data-provenance.yml)
-- [Conformance](conformance/food-info-conformance.yml)
-- [Developer Portal](https://food-info.org/developer)
 - [Support](https://food-info.org/contact)
-- [Well Known](well-known/food-info-well-known.yml)
-- [Security Txt](well-known/food-info-security.txt)
-- [Vulnerability Disclosure](security/food-info-vulnerability-disclosure.yml)
 - [Security](https://food-info.org/.well-known/security.txt)
-- [Rate Limits](rate-limits/food-info-rate-limits.yml)
-- [Error Catalog](errors/food-info-problem-types.yml)
-- [Conventions](conventions/food-info-conventions.yml)
-- [Lifecycle](lifecycle/food-info-lifecycle.yml)
-- [Data Model](data-model/food-info-data-model.yml)
-- [M C P Server](mcp/food-info-mcp.yml)
-- [Tool Crosswalk](mcp/food-info-tool-crosswalk.yml)
-- [Agent Skill](skills/_index.yml)
-- [Overlay](overlays/food-info-overlay.yaml)
-- [Examples](examples/food-info-examples.yml)
-- [L L Ms Txt](llms/food-info-llms.txt)
+- [Terms of service](https://food-info.org/terms-conditions)
+- [Privacy policy](https://food-info.org/privacy-policy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 35.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 51.7 |
+| Contract governance | 4.5 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 21.1 |
+
+**Agent readiness 27.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.2** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/food-info/](https://apis.io/providers/food-info/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Food Info: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/food-info/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
